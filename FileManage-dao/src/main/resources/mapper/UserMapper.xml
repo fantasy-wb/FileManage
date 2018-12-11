@@ -3,13 +3,31 @@
 <mapper namespace="cn.jxufe.dao.mysql.UserDao" >
 
 
-    <resultMap id="BaseResultMap" type="cn.jxufe.beans.User.User" >
+    <resultMap id="BaseResultMap" type="cn.jxufe.beans.model.User" >
 
     </resultMap>
 
-    <select id="getAllUser" resultType="cn.jxufe.beans.User.User">
+    <select id="getAllUser" resultType="cn.jxufe.beans.model.User">
         select * from USER
     </select>
+
+    <insert id="addUser" parameterType="cn.jxufe.beans.model.User">
+        insert into USER(
+        id,
+        user_name,
+        password
+        )
+        values (
+        #{id},
+        #{userName},
+        #{password}
+        )
+    </insert>
+
+    <delete id="delUserByPrimaryKey" parameterType="java.lang.Integer">
+        delete from tab_User
+        where id = #{id}
+    </delete>
 
 
 </mapper>
