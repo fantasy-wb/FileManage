@@ -1,0 +1,77 @@
+package cn.jxufe.beans.model;
+
+import java.io.Serializable;
+import java.util.Date;
+
+public class Permission implements Serializable {
+    private Integer permId;
+
+    private String permName;
+
+    private Integer createUserId;
+
+    private Date createDate;
+
+    private Integer modifyUserId;
+
+    private Date modifyDate;
+
+    public Integer getPermId() {
+        return permId;
+    }
+
+    public void setPermId(Integer permId) {
+        this.permId = permId;
+    }
+
+    public String getPermName() {
+        return permName;
+    }
+
+    public void setPermName(String permName) {
+        this.permName = permName == null ? null : permName.trim();
+    }
+
+    public Integer getCreateUserId() {
+        return createUserId;
+    }
+
+    public void setCreateUserId(Integer createUserId) {
+        this.createUserId = createUserId;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
+    }
+
+    public Date getModifyDate() {
+        return modifyDate;
+    }
+
+    public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
+    }
+
+    public Permission(){}
+
+    public Permission(Integer permId, String permName, Integer createUserId, Date createDate, Integer modifyUserId, Date modifyDate) {
+        this.permId = permId;
+        this.permName = permName;
+        this.createUserId = createUserId;
+        this.createDate = createDate;
+        this.modifyUserId = modifyUserId;
+        this.modifyDate = modifyDate;
+    }
+}
