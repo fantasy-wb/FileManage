@@ -51,7 +51,6 @@
         where r.role_name = #{roleName,jdbcType=VARCHAR}
     </select>
 
-
     <!--***********基本增删改查**************-->
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select

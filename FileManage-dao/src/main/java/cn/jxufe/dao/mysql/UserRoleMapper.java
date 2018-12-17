@@ -1,10 +1,15 @@
 package cn.jxufe.dao.mysql;
 
-import cn.jxufe.beans.model.Role;
-import cn.jxufe.beans.model.User;
 import cn.jxufe.beans.model.UserRole;
 
 public interface UserRoleMapper {
+
+    /**
+     * 删除用户信息中间表
+     * @param UserId
+     * @return
+     */
+    int deleteByUserId(Integer UserId);
 
     int deleteByPrimaryKey(Integer userRoleId);
 
@@ -17,11 +22,5 @@ public interface UserRoleMapper {
     int updateByPrimaryKeySelective(UserRole record);
 
     int updateByPrimaryKey(UserRole record);
-
-    /**根据当前用户获取角色信息**/
-    Role selectRoleByCurrentUser(User user);
-
-
-
 
 }

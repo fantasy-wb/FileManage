@@ -6,8 +6,13 @@ import com.github.pagehelper.PageInfo;
 
 public interface IUserService {
 
-    PageInfo<User> getAllUser(int currentPage, int pageSize);
+    PageInfo<User> selectByPrimaryKeyWithDepRole(int currentPage, int pageSize);
 
-    User selectByUserId(Integer userId);
+    User selectByLoginName(String loginName);
 
+    String createNewUser(User user);
+
+    String delateUser(Integer userId);
+
+    String changeUserInfo(User user);
 }

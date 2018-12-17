@@ -40,13 +40,13 @@
         </javaClientGenerator>
 
         <!--指定每个表的生成策略-->
-        <table tableName="tab_User" domainObjectName="User" />
-        <table tableName="tab_UserRole" domainObjectName="UserRole"/>
-        <table tableName="tab_Department" domainObjectName="Department"/>
-        <table tableName="tab_Role" domainObjectName="Role"/>
-        <table tableName="tab_Permission" domainObjectName="Permission"/>
-        <table tableName="tab_RolePerm" domainObjectName="RolePerm"/>
-        <table tableName="tab_File" domainObjectName="File"/>
-
+        <!--<table tableName="tab_User" domainObjectName="User" />-->
+        <!--<table tableName="tab_UserRole" domainObjectName="UserRole"/>-->
+        <!--<table tableName="tab_Department" domainObjectName="Department"/>-->
+        <!--<table tableName="tab_Role" domainObjectName="Role"/>-->
+        <!--<table tableName="tab_Permission" domainObjectName="Permission"/>-->
+        <!--<table tableName="tab_RolePerm" domainObjectName="RolePerm"/>-->
+        <!--<table tableName="tab_File" domainObjectName="File"/>-->
+        <table tableName="tableName" domainObjectName="modelName"/>
     </context>
 </generatorConfiguration>
