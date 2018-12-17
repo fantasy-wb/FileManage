@@ -2,11 +2,14 @@ package cn.jxufe.beans.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Department implements Serializable {
     private Integer depId;
 
     private String depName;
+
+    private List<Role> roles;
 
     private Integer createUserId;
 
@@ -64,15 +67,37 @@ public class Department implements Serializable {
         this.modifyDate = modifyDate;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
     public Department() {
     }
 
-    public Department(Integer depId, String depName, Integer createUserId, Date createDate, Integer modifyUserId, Date modifyDate) {
+    public Department(Integer depId, String depName, List<Role> roles, Integer createUserId, Date createDate, Integer modifyUserId, Date modifyDate) {
         this.depId = depId;
         this.depName = depName;
+        this.roles = roles;
         this.createUserId = createUserId;
         this.createDate = createDate;
         this.modifyUserId = modifyUserId;
         this.modifyDate = modifyDate;
+    }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "depId=" + depId +
+                ", depName='" + depName + '\'' +
+                ", roles=" + roles +
+                ", createUserId=" + createUserId +
+                ", createDate=" + createDate +
+                ", modifyUserId=" + modifyUserId +
+                ", modifyDate=" + modifyDate +
+                '}';
     }
 }

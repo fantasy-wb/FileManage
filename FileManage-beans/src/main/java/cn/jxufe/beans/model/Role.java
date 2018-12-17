@@ -2,6 +2,7 @@ package cn.jxufe.beans.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class Role implements Serializable {
     private Integer roleId;
@@ -19,6 +20,8 @@ public class Role implements Serializable {
     private Integer modifyUserId;
 
     private Date modifyDate;
+
+    private List<Permission> permission;
 
     public Integer getRoleId() {
         return roleId;
@@ -84,9 +87,17 @@ public class Role implements Serializable {
         this.modifyDate = modifyDate;
     }
 
+    public List<Permission> getPermission() {
+        return permission;
+    }
+
+    public void setPermission(List<Permission> permission) {
+        this.permission = permission;
+    }
+
     public  Role(){}
 
-    public Role(Integer roleId, Integer deptId, String roleName, String roleDesc, Integer createUserId, Date createDate, Integer modifyUserId, Date modifyDate) {
+    public Role(Integer roleId, Integer deptId, String roleName, String roleDesc, Integer createUserId, Date createDate, Integer modifyUserId, Date modifyDate, List<Permission> permission) {
         this.roleId = roleId;
         this.deptId = deptId;
         this.roleName = roleName;
@@ -95,5 +106,21 @@ public class Role implements Serializable {
         this.createDate = createDate;
         this.modifyUserId = modifyUserId;
         this.modifyDate = modifyDate;
+        this.permission = permission;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "roleId=" + roleId +
+                ", deptId=" + deptId +
+                ", roleName='" + roleName + '\'' +
+                ", roleDesc='" + roleDesc + '\'' +
+                ", createUserId=" + createUserId +
+                ", createDate=" + createDate +
+                ", modifyUserId=" + modifyUserId +
+                ", modifyDate=" + modifyDate +
+                ", permission=" + permission +
+                '}';
     }
 }

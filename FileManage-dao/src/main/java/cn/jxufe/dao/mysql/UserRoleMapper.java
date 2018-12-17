@@ -18,6 +18,7 @@ public interface UserRoleMapper {
 
     int updateByPrimaryKey(UserRole record);
 
+    /**根据当前用户获取角色信息**/
     Role selectRoleByCurrentUser(User user);
 
 

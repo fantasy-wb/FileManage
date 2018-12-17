@@ -74,4 +74,16 @@ public class Permission implements Serializable {
         this.modifyUserId = modifyUserId;
         this.modifyDate = modifyDate;
     }
+
+    @Override
+    public String toString() {
+        return "Permission{" +
+                "permId=" + permId +
+                ", permName='" + permName + '\'' +
+                ", createUserId=" + createUserId +
+                ", createDate=" + createDate +
+                ", modifyUserId=" + modifyUserId +
+                ", modifyDate=" + modifyDate +
+                '}';
+    }
 }

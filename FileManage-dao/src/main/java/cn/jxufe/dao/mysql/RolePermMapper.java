@@ -1,6 +1,9 @@
 package cn.jxufe.dao.mysql;
 
+import cn.jxufe.beans.model.Permission;
 import cn.jxufe.beans.model.RolePerm;
+
+import java.util.List;
 
 
 public interface RolePermMapper {
@@ -15,4 +18,6 @@ public interface RolePermMapper {
     int updateByPrimaryKeySelective(RolePerm record);
 
     int updateByPrimaryKey(RolePerm record);
+
+    List<Permission> selectByPrimaryKeyWithPermission(Integer roleId);
 }

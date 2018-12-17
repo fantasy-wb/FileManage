@@ -1,31 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.jxufe.dao.mysql.RoleMapper">
-  <resultMap id="BaseResultMap" type="cn.jxufe.beans.model.Role">
-    <id column="role_id" jdbcType="INTEGER" property="roleId" />
-    <result column="dept_id" jdbcType="INTEGER" property="deptId" />
-    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
-    <result column="role_desc" jdbcType="VARCHAR" property="roleDesc" />
-    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
-    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-    <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
-    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    role_id, dept_id, role_name, role_desc, create_user_id, create_date, modify_user_id, 
+    <resultMap id="BaseResultMap" type="cn.jxufe.beans.model.Role">
+        <id column="role_id" jdbcType="INTEGER" property="roleId"/>
+        <result column="dept_id" jdbcType="INTEGER" property="deptId"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="role_desc" jdbcType="VARCHAR" property="roleDesc"/>
+        <result column="create_user_id" jdbcType="INTEGER" property="createUserId"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId"/>
+        <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate"/>
+    </resultMap>
+    <!--***********联合查询返回结果集封装************-->
+    <resultMap id="WithPermissionResultMap" type="cn.jxufe.beans.model.Role">
+        <id column="role_id" jdbcType="INTEGER" property="roleId"/>
+        <result column="dept_id" jdbcType="INTEGER" property="deptId"/>
+        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+        <result column="role_desc" jdbcType="VARCHAR" property="roleDesc"/>
+        <result column="create_user_id" jdbcType="INTEGER" property="createUserId"/>
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+        <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId"/>
+        <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate"/>
+        <collection property="permission" ofType="cn.jxufe.beans.model.Permission">
+            <id column="perm_id" jdbcType="INTEGER" property="permId" />
+            <result column="perm_name" jdbcType="VARCHAR" property="permName" />
+            <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+            <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+            <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
+            <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    role_id, dept_id, role_name, role_desc, create_user_id, create_date, modify_user_id,
     modify_date
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from tab_Role
-    where role_id = #{roleId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <sql id="WithPermissions_Column_List">
+        r.role_id, r.dept_id, r.role_name, r.role_desc, r.create_user_id, r.create_date, r.modify_user_id,
+    r.modify_date,
+          p.perm_id,p.perm_name,p.create_date,p.create_user_id,p.modify_user_id,p.modify_date
+    </sql>
+
+    <!--***********角色权限查询(根据角色名)**************-->
+    <select id="selectByprimaryKeyWithPermissions" parameterType="java.lang.String" resultMap="WithPermissionResultMap">
+        select
+        <include refid="WithPermissions_Column_List"/>
+        from tab_Role r
+        left join tab_RolePerm rp on rp.role_id = r.role_id
+        left join tab_Permission p on p.perm_id = rp.perm_id
+        where r.role_name = #{roleName,jdbcType=VARCHAR}
+    </select>
+
+
+    <!--***********基本增删改查**************-->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tab_Role
+        where role_id = #{roleId,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tab_Role
     where role_id = #{roleId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="cn.jxufe.beans.model.Role">
+    <insert id="insert" parameterType="cn.jxufe.beans.model.Role">
     insert into tab_Role (role_id, dept_id, role_name, 
       role_desc, create_user_id, create_date, 
       modify_user_id, modify_date)
@@ -33,89 +71,89 @@
       #{roleDesc,jdbcType=VARCHAR}, #{createUserId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP}, 
       #{modifyUserId,jdbcType=INTEGER}, #{modifyDate,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="cn.jxufe.beans.model.Role">
-    insert into tab_Role
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="roleId != null">
-        role_id,
-      </if>
-      <if test="deptId != null">
-        dept_id,
-      </if>
-      <if test="roleName != null">
-        role_name,
-      </if>
-      <if test="roleDesc != null">
-        role_desc,
-      </if>
-      <if test="createUserId != null">
-        create_user_id,
-      </if>
-      <if test="createDate != null">
-        create_date,
-      </if>
-      <if test="modifyUserId != null">
-        modify_user_id,
-      </if>
-      <if test="modifyDate != null">
-        modify_date,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="roleId != null">
-        #{roleId,jdbcType=INTEGER},
-      </if>
-      <if test="deptId != null">
-        #{deptId,jdbcType=INTEGER},
-      </if>
-      <if test="roleName != null">
-        #{roleName,jdbcType=VARCHAR},
-      </if>
-      <if test="roleDesc != null">
-        #{roleDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserId != null">
-        #{createUserId,jdbcType=INTEGER},
-      </if>
-      <if test="createDate != null">
-        #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifyUserId != null">
-        #{modifyUserId,jdbcType=INTEGER},
-      </if>
-      <if test="modifyDate != null">
-        #{modifyDate,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.jxufe.beans.model.Role">
-    update tab_Role
-    <set>
-      <if test="deptId != null">
-        dept_id = #{deptId,jdbcType=INTEGER},
-      </if>
-      <if test="roleName != null">
-        role_name = #{roleName,jdbcType=VARCHAR},
-      </if>
-      <if test="roleDesc != null">
-        role_desc = #{roleDesc,jdbcType=VARCHAR},
-      </if>
-      <if test="createUserId != null">
-        create_user_id = #{createUserId,jdbcType=INTEGER},
-      </if>
-      <if test="createDate != null">
-        create_date = #{createDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="modifyUserId != null">
-        modify_user_id = #{modifyUserId,jdbcType=INTEGER},
-      </if>
-      <if test="modifyDate != null">
-        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where role_id = #{roleId,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="cn.jxufe.beans.model.Role">
+    <insert id="insertSelective" parameterType="cn.jxufe.beans.model.Role">
+        insert into tab_Role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
+                role_id,
+            </if>
+            <if test="deptId != null">
+                dept_id,
+            </if>
+            <if test="roleName != null">
+                role_name,
+            </if>
+            <if test="roleDesc != null">
+                role_desc,
+            </if>
+            <if test="createUserId != null">
+                create_user_id,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="modifyUserId != null">
+                modify_user_id,
+            </if>
+            <if test="modifyDate != null">
+                modify_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="roleId != null">
+                #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="deptId != null">
+                #{deptId,jdbcType=INTEGER},
+            </if>
+            <if test="roleName != null">
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleDesc != null">
+                #{roleDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserId != null">
+                #{createUserId,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUserId != null">
+                #{modifyUserId,jdbcType=INTEGER},
+            </if>
+            <if test="modifyDate != null">
+                #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.jxufe.beans.model.Role">
+        update tab_Role
+        <set>
+            <if test="deptId != null">
+                dept_id = #{deptId,jdbcType=INTEGER},
+            </if>
+            <if test="roleName != null">
+                role_name = #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleDesc != null">
+                role_desc = #{roleDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="createUserId != null">
+                create_user_id = #{createUserId,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifyUserId != null">
+                modify_user_id = #{modifyUserId,jdbcType=INTEGER},
+            </if>
+            <if test="modifyDate != null">
+                modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where role_id = #{roleId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.jxufe.beans.model.Role">
     update tab_Role
     set dept_id = #{deptId,jdbcType=INTEGER},
       role_name = #{roleName,jdbcType=VARCHAR},

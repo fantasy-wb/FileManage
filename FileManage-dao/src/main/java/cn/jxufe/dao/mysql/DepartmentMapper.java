@@ -1,12 +1,17 @@
 package cn.jxufe.dao.mysql;
 
 import cn.jxufe.beans.model.Department;
+
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
+
+
 
 public interface DepartmentMapper {
 
+    /*********查询得到所有部门下所有Role**********/
+    List<Department> findAllDepartment();
 
+    /********Department类的增删改查********/
     int deleteByPrimaryKey(Integer depId);
 
     int insert(Department record);

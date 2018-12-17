@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class User implements Serializable {
 
-
+    /************基本字段**************/
     private Integer userId;
 
     private String loginName;
@@ -30,6 +30,11 @@ public class User implements Serializable {
 
     private Date modifyDate;
 
+    private Role role;
+
+    private Department department;
+
+    /***********基本 get set 方法*************/
     public Integer getUserId() {
         return userId;
     }
@@ -126,9 +131,20 @@ public class User implements Serializable {
         this.modifyDate = modifyDate;
     }
 
+    public Role getRole(){return role;}
+    public void setRole(Role role){this.role = role;}
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
     public User(){}
 
-    public User(Integer userId, String loginName, String loginPassword, String realName, Integer sex, String email, Boolean status, Date createDate, Integer createUserId, Date lastLoginDate, Integer modifyUserId, Date modifyDate) {
+    public User(Integer userId, String loginName, String loginPassword, String realName, Integer sex, String email, Boolean status, Date createDate, Integer createUserId, Date lastLoginDate, Integer modifyUserId, Date modifyDate, Role role, Department department) {
         this.userId = userId;
         this.loginName = loginName;
         this.loginPassword = loginPassword;
@@ -141,6 +157,8 @@ public class User implements Serializable {
         this.lastLoginDate = lastLoginDate;
         this.modifyUserId = modifyUserId;
         this.modifyDate = modifyDate;
+        this.role = role;
+        this.department = department;
     }
 
     @Override
@@ -158,6 +176,8 @@ public class User implements Serializable {
                 ", lastLoginDate=" + lastLoginDate +
                 ", modifyUserId=" + modifyUserId +
                 ", modifyDate=" + modifyDate +
+                ", role=" + role +
+                ", department=" + department +
                 '}';
     }
 }

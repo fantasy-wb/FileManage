@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.jxufe.dao.mysql.DepartmentMapper">
+
   <resultMap id="BaseResultMap" type="cn.jxufe.beans.model.Department">
     <id column="dep_id" jdbcType="INTEGER" property="depId" />
     <result column="dep_name" jdbcType="VARCHAR" property="depName" />
@@ -9,9 +10,43 @@
     <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
     <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
   </resultMap>
+  <resultMap id="WithRolesResultMap" type="cn.jxufe.beans.model.Department">
+    <id column="dep_id" jdbcType="INTEGER" property="depId" />
+    <result column="dep_name" jdbcType="VARCHAR" property="depName" />
+    <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
+    <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+    <collection property="roles" ofType="cn.jxufe.beans.model.Role">
+      <id column="role_id" jdbcType="INTEGER" property="roleId"/>
+      <result column="dept_id" jdbcType="INTEGER" property="deptId"/>
+      <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
+      <result column="role_desc" jdbcType="VARCHAR" property="roleDesc"/>
+      <result column="create_user_id" jdbcType="INTEGER" property="createUserId"/>
+      <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
+      <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId"/>
+      <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate"/>
+    </collection>
+  </resultMap>
+
+
   <sql id="Base_Column_List">
     dep_id, dep_name, create_user_id, create_date, modify_user_id, modify_date
   </sql>
+  <sql id="WithRoles_Column_List">
+  d.dep_id,d.dep_name,d.create_user_id,d.create_date,d.modify_user_id,d.modify_date,
+  r.role_id,r.dept_id,r.role_name,r.role_desc,r.create_user_id,r.create_date,r.modify_user_id,r.modify_date
+</sql>
+  <!--********查找所有部门角色信息**********-->
+  <select id="findAllDepartment" resultMap="WithRolesResultMap">
+    select
+    <include refid="WithRoles_Column_List"/>
+    from tab_Department d
+    left join tab_Role r on r.dept_id = d.dep_id
+  </select>
+
+
+  <!--*********基本增删改查************-->
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
