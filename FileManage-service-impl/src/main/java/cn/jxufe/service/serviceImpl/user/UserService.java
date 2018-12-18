@@ -67,6 +67,11 @@ public class UserService implements IUserService {
         return null;
     }
 
+    /**
+     * 删除一个用户
+     * @param userId
+     * @return
+     */
     @Override
     public String delateUser(Integer userId) {
         userRoleMapper.deleteByUserId(userId);
@@ -74,6 +79,11 @@ public class UserService implements IUserService {
         return null;
     }
 
+    /**
+     * 更改一个用户
+     * @param user
+     * @return
+     */
     @Override
     public String changeUserInfo(User user) {
         return null;

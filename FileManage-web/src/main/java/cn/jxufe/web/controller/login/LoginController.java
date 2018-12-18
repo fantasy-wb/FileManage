@@ -48,7 +48,7 @@ public class LoginController {
     @ResponseBody
     @RequestMapping(value = "/getAllUser", method = RequestMethod.GET)
     public ListResult<User> getAllUser(int currentPage, int pageSize, HttpServletRequest request){
-        PageInfo<User> pageInfo = userService.getAllUser(currentPage,pageSize);
+        PageInfo<User> pageInfo = userService.selectByPrimaryKeyWithDepRole(currentPage,pageSize);
 
         return ListResult.buildSuccess(pageInfo);
     }

@@ -8,6 +8,16 @@ public class Permission implements Serializable {
 
     private String permName;
 
+    public String getPermUrl() {
+        return permUrl;
+    }
+
+    public void setPermUrl(String permUrl) {
+        this.permUrl = permUrl;
+    }
+
+    private String permUrl;
+
     private Integer createUserId;
 
     private Date createDate;
@@ -66,9 +76,10 @@ public class Permission implements Serializable {
 
     public Permission(){}
 
-    public Permission(Integer permId, String permName, Integer createUserId, Date createDate, Integer modifyUserId, Date modifyDate) {
+    public Permission(Integer permId, String permName, String permUrl, Integer createUserId, Date createDate, Integer modifyUserId, Date modifyDate) {
         this.permId = permId;
         this.permName = permName;
+        this.permUrl = permUrl;
         this.createUserId = createUserId;
         this.createDate = createDate;
         this.modifyUserId = modifyUserId;
@@ -80,6 +91,7 @@ public class Permission implements Serializable {
         return "Permission{" +
                 "permId=" + permId +
                 ", permName='" + permName + '\'' +
+                ", permUrl='" + permUrl + '\'' +
                 ", createUserId=" + createUserId +
                 ", createDate=" + createDate +
                 ", modifyUserId=" + modifyUserId +
