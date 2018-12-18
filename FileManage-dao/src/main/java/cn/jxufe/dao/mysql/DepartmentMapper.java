@@ -8,8 +8,13 @@ import java.util.List;
 
 public interface DepartmentMapper {
 
-    /*********查询得到所有部门下所有Role**********/
+    /**
+     * 查询得到所有部门下所有Role
+     * @return 部门集合
+     */
     List<Department> findAllDepartment();
+
+
 
     /********Department类的增删改查********/
     int deleteByPrimaryKey(Integer depId);

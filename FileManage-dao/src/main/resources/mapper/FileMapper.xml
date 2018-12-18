@@ -16,6 +16,11 @@
     file_id, file_name, file_path, dep_id, is_impot, create_user_id, create_date, modify_user_id, 
     modify_date
   </sql>
+  <select id="findAllFile" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tab_File
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

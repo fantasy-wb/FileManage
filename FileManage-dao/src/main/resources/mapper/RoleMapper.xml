@@ -42,13 +42,12 @@
     </sql>
 
     <!--***********角色权限查询(根据角色名)**************-->
-    <select id="selectByprimaryKeyWithPermissions" parameterType="java.lang.String" resultMap="WithPermissionResultMap">
+    <select id="selectByprimaryKeyWithPermissions" resultMap="WithPermissionResultMap">
         select
         <include refid="WithPermissions_Column_List"/>
         from tab_Role r
         left join tab_RolePerm rp on rp.role_id = r.role_id
         left join tab_Permission p on p.perm_id = rp.perm_id
-        where r.role_name = #{roleName,jdbcType=VARCHAR}
     </select>
 
     <!--***********基本增删改查**************-->

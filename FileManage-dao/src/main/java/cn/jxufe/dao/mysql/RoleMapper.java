@@ -9,18 +9,27 @@ public interface RoleMapper {
 
 
     /**
-     * 角色权限查询
-     * @param roleName 角色名
+     * 所有角色权限查询
+     *
+     * @param
      * @return 角色集合
      */
-    List<Role> selectByprimaryKeyWithPermissions(String roleName);
+    List<Role> selectByprimaryKeyWithPermissions();
 
+    /**
+     * 角色删除
+     *
+     * @param roleId
+     * @return 返回值 1：成功；0：数据不存在
+     */
     int deleteByPrimaryKey(Integer roleId);
 
     int insert(Role record);
+
     /**
      * 角色新增
-     * @return 返回值 1：成功；0：失败
+     *
+     * @return 返回值 1：成功；
      */
     int insertSelective(Role record);
 
@@ -28,7 +37,8 @@ public interface RoleMapper {
 
     /**
      * 更改角色信息
-     * @return 返回值 1：成功；0：失败
+     *
+     * @return 返回值 1：成功；
      */
     int updateByPrimaryKeySelective(Role record);
 
