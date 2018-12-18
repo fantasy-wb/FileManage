@@ -6,12 +6,24 @@ public interface UserRoleMapper {
 
     /**
      * 删除用户信息中间表
-     * @param UserId
+     * @param userId
      * @return
      */
-    int deleteByUserId(Integer UserId);
+    int deleteByUserId(Integer userId);
 
-    int deleteByPrimaryKey(Integer userRoleId);
+    /**
+     * 更改用户角色
+     * @param userId
+     * @return
+     */
+    int updateByUserId(Integer userId);
+
+    /**
+     * 得到当前用户角色关联对象
+     * @param userId
+     * @return
+     */
+    UserRole selectByUserId(Integer userId);
 
     int insert(UserRole record);
 
@@ -19,8 +31,9 @@ public interface UserRoleMapper {
 
     UserRole selectByPrimaryKey(Integer userRoleId);
 
-    int updateByPrimaryKeySelective(UserRole record);
+    int deleteByPrimaryKey(Integer userRoleId);
 
     int updateByPrimaryKey(UserRole record);
 
+    int updateByPrimaryKeySelective(UserRole record);
 }
