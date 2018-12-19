@@ -26,6 +26,8 @@ public class UserService implements IUserService {
 
     private static final String SUCCESS = "success";
 
+    private static final Integer currentUser = 1;
+
     @Autowired
     private UserMapper userMapper;
 
@@ -78,7 +80,7 @@ public class UserService implements IUserService {
         try {
             /*****将user中password加密后保存*****/
             user = UserManager.md5Pswd(user);
-            UserRole userRole = new UserRole(null, user.getUserId(), user.getRole().getRoleId(), 1, new Date(), null, null);
+            UserRole userRole = new UserRole(null, user.getUserId(), user.getRole().getRoleId(), currentUser, new Date(), null, null);
             userMapper.insert(user);
             userRoleMapper.insertSelective(userRole);
             transactionManager.commit(transactionStatus);
@@ -124,12 +126,12 @@ public class UserService implements IUserService {
             Role role = user.getRole();
             if ((role != null) && (role.getRoleId() != userRole.getRoleId())) {
                 userRole.setModifyDate(new Date());
-                userRole.setModifyUserId(1);
+                userRole.setModifyUserId(currentUser);
                 userRole.setRoleId(role.getRoleId());
                 userRoleMapper.updateByPrimaryKeySelective(userRole);
             }
             user.setModifyDate(new Date());
-            user.setModifyUserId(1);
+            user.setModifyUserId(currentUser);
             userMapper.updateByPrimaryKey(user);
             transactionManager.commit(transactionStatus);
             return SUCCESS;

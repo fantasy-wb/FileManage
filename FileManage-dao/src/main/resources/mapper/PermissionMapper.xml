@@ -13,6 +13,12 @@
   <sql id="Base_Column_List">
     perm_id, perm_name, perm_url, create_user_id, create_date, modify_user_id, modify_date
   </sql>
+  <select id="findAllPermission" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tab_Permission
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />

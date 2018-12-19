@@ -17,6 +17,13 @@ public interface RoleMapper {
     List<Role> selectByprimaryKeyWithPermissions();
 
     /**
+     * 查找部门下所有角色
+     * @param deptId
+     * @return
+     */
+    List<Role> selectByDeptId(Integer deptId);
+
+    /**
      * 角色删除
      *
      * @param roleId

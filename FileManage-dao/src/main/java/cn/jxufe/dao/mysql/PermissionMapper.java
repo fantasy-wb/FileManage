@@ -2,8 +2,12 @@ package cn.jxufe.dao.mysql;
 
 import cn.jxufe.beans.model.Permission;
 
+import java.util.List;
+
 
 public interface PermissionMapper {
+
+    List<Permission> findAllPermission();
 
     int deleteByPrimaryKey(Integer permId);
 

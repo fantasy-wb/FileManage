@@ -14,8 +14,6 @@ public interface DepartmentMapper {
      */
     List<Department> findAllDepartment();
 
-
-
     /********Department类的增删改查********/
     int deleteByPrimaryKey(Integer depId);
 

@@ -49,6 +49,13 @@
         left join tab_RolePerm rp on rp.role_id = r.role_id
         left join tab_Permission p on p.perm_id = rp.perm_id
     </select>
+    <select id="selectByDeptId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from tab_Role
+        where dept_id = #{deptId,jdbcType=INTEGER}
+    </select>
+
 
     <!--***********基本增删改查**************-->
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

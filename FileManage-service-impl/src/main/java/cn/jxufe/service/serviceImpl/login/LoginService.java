@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class LoginService implements ILoginService {
+    private static final String SUCCESS = "success";
 
     @Autowired
     private UserMapper userMapper;
@@ -20,10 +21,9 @@ public class LoginService implements ILoginService {
      */
     @Override
     public String login(String loginName, String loginPassword) {
-        /***********校验密码+创建cooke************/
         loginPassword = UserManager.md5Pswd(loginName,loginPassword);
         if(userMapper.login(loginName,loginPassword)!=null){
-            return "SUCCESS";
+            return SUCCESS;
         }
         return null;
     }
