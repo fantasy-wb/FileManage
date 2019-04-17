@@ -24,13 +24,13 @@
         <collection property="permission" ofType="cn.jxufe.beans.model.Permission">
             <id column="perm_id" jdbcType="INTEGER" property="permId" />
             <result column="perm_name" jdbcType="VARCHAR" property="permName" />
+            <result column="perm_url" jdbcType="VARCHAR" property="permUrl"/>
             <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
             <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
             <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
             <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
         </collection>
     </resultMap>
-
     <sql id="Base_Column_List">
     role_id, dept_id, role_name, role_desc, create_user_id, create_date, modify_user_id,
     modify_date
@@ -38,7 +38,7 @@
     <sql id="WithPermissions_Column_List">
         r.role_id, r.dept_id, r.role_name, r.role_desc, r.create_user_id, r.create_date, r.modify_user_id,
     r.modify_date,
-          p.perm_id,p.perm_name,p.create_date,p.create_user_id,p.modify_user_id,p.modify_date
+          p.perm_id,p.perm_name, p.perm_url, p.create_date,p.create_user_id,p.modify_user_id,p.modify_date
     </sql>
 
     <!--***********角色权限查询(根据角色名)**************-->

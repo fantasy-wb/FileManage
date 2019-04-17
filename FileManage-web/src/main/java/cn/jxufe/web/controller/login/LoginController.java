@@ -45,11 +45,12 @@ public class LoginController {
         return null;
     }
 
-//    @ResponseBody
-//    @RequestMapping(value = "/getAllUser", method = RequestMethod.GET)
-//    public ListResult<User> getAllUser(int currentPage, int pageSize, HttpServletRequest request){
-//        PageInfo<User> pageInfo = userService.getAllUser(currentPage,pageSize);
-//
-//        return ListResult.buildSuccess(pageInfo);
-//    }
+
+    @ResponseBody
+    @RequestMapping(value = "/getAllUser", method = RequestMethod.GET)
+    public ListResult<User> getAllUser(int currentPage, int pageSize, HttpServletRequest request){
+        PageInfo<User> pageInfo = userService.selectByPrimaryKeyWithDepRole(currentPage,pageSize);
+
+        return ListResult.buildSuccess(pageInfo);
+    }
 }

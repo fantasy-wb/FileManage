@@ -4,13 +4,14 @@
   <resultMap id="BaseResultMap" type="cn.jxufe.beans.model.Permission">
     <id column="perm_id" jdbcType="INTEGER" property="permId" />
     <result column="perm_name" jdbcType="VARCHAR" property="permName" />
+    <result column="perm_url" jdbcType="VARCHAR" property="permUrl"/>
     <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
     <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
   </resultMap>
   <sql id="Base_Column_List">
-    perm_id, perm_name, create_user_id, create_date, modify_user_id, modify_date
+    perm_id, perm_name, perm_url, create_user_id, create_date, modify_user_id, modify_date
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
