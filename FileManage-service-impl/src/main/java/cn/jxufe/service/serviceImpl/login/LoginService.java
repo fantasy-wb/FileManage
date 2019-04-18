@@ -13,9 +13,9 @@ public class LoginService implements ILoginService {
 
     @Override
     public String login(String loginName, String loginPassword) {
-        if(userMapper.login(loginName,loginPassword)!=null){
-            return "SUCCESS";
-        }
+//        if(userMapper.login(loginName,loginPassword)!=null){
+//            return "SUCCESS";
+//        }
         return null;
     }
 
