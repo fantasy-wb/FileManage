@@ -1,18 +1,22 @@
 //package cn.jxufe.web.interceptor;
 //
+//import cn.jxufe.beans.enums.Errcode;
+//import cn.jxufe.beans.result.BaseResult;
+//import cn.jxufe.iservice.iservice.IUserService;
+//import cn.jxufe.utils.HttpRequestUtils;
+//import cn.jxufe.utils.HttpResponseUtils;
 //import com.alibaba.dubbo.config.annotation.Reference;
 //import com.alibaba.fastjson.JSONObject;
 //import com.cmos.advertcenter.beans.ChopRoleCapable;
 //import com.cmos.advertcenter.beans.ChopUserEntity;
 //import com.cmos.advertcenter.beans.Errcode;
 //import com.cmos.advertcenter.iservice.IUserService;
-//import com.cmos.advertcenter.utils.HttpRequestUtils;
-//import com.cmos.advertcenter.utils.HttpResponseUtil;
 //import com.cmos.advertcenter.web.business.result.BaseResult;
 //import com.cmos.advertcenter.web.utils.FrontUtil;
 //import com.cmos.common.bean.JsonFormatException;
 //import com.google.common.collect.Lists;
 //import org.apache.commons.lang.StringUtils;
+//import org.apache.commons.lang3.StringUtils;
 //import org.mframework.common.LoginInfo;
 //import org.slf4j.Logger;
 //import org.slf4j.LoggerFactory;
@@ -26,6 +30,7 @@
 //import javax.servlet.http.HttpServletResponse;
 //import javax.servlet.http.HttpSession;
 //import java.io.IOException;
+//import java.util.ArrayList;
 //import java.util.Arrays;
 //import java.util.List;
 //
@@ -47,12 +52,12 @@
 //    @Value("${webEnv}")
 //    private String env;
 //
-//    @Reference(group = "advertcenter")
+//    @Reference(group = "FileManage")
 //    private IUserService userService;
 //
 //    @Value("${excludeSSoUrls}")
 //    private String excludeUrls;
-//    private List<String> excludeUrlList = Lists.newArrayList();
+//    private List<String> excludeUrlList = new ArrayList();
 //
 //
 //    @PostConstruct
@@ -72,7 +77,7 @@
 //                return true;
 //            }
 //        }
-//        if (requestURI.startsWith(contextPath + "/manage")) {
+//        if (requestURI.startsWith(contextPath + "/api")) {
 //            request.getContextPath();
 //            HttpSession session = request.getSession();
 ////            LoginInfo loginInfo = (LoginInfo) session.getAttribute(SESSIONKEY_M_LOGININFO);
@@ -80,13 +85,13 @@
 //
 //
 //            LoginInfo user;
-//            if (StringUtils.isNotBlank(env) && StringUtils.equals(DEVELOPMENT_ENVIRONMENT, env)) {
-//                // 开发环境用默认用户名
-//                user = this.getUserByName(DEFAULT_ADMIN);
-//                request.setAttribute(FrontUtil.SESSIONKEY_M_LOGININFO, user);
-//                request.getSession().setAttribute(FrontUtil.SESSIONKEY_M_LOGININFO, user);
-//                return true;
-//            }
+////            if (StringUtils.isNotBlank(env) && StringUtils.equals(DEVELOPMENT_ENVIRONMENT, env)) {
+////                // 开发环境用默认用户名
+////                user = this.getUserByName(DEFAULT_ADMIN);
+////                request.setAttribute(FrontUtil.SESSIONKEY_M_LOGININFO, user);
+////                request.getSession().setAttribute(FrontUtil.SESSIONKEY_M_LOGININFO, user);
+////                return true;
+////            }
 //
 ////            String ssoToken = request.getParameter("ssoToken");
 //            // YWRtaW58NTM3MWQ0NGZ8bnF6dmEwODI2cTk5c3wxNTQwMTE3Nzg4NzU3
@@ -115,7 +120,7 @@
 //                this.setCookieExpires(request, response, ssoToken);
 //            } else {
 //                String domain = HttpRequestUtils.getDomain(request);
-//                HttpResponseUtil.deleteCookie(response, INFO_INSIDE, domain, "/");
+//                HttpResponseUtils.deleteCookie(response, INFO_INSIDE, domain, "/");
 //                this.writeLogoutResponse(response);
 //                return false;
 //            }
@@ -195,7 +200,7 @@
 //     *
 //     * @param response
 //     */
-//    private void writeErrorResponse(HttpServletResponse response) throws IOException, JsonFormatException {
+//    private void writeErrorResponse(HttpServletResponse response) throws IOException{
 //        BaseResult failResult = new BaseResult(Errcode.A00001.name(), "登录状态失效");
 //        failResult.setData(loginUrl);
 //        response.setCharacterEncoding("UTF-8");
@@ -208,9 +213,8 @@
 //     * 响应注销结果
 //     * @param response
 //     * @throws IOException
-//     * @throws JsonFormatException
 //     */
-//    private void writeLogoutResponse(HttpServletResponse response) throws IOException, JsonFormatException {
+//    private void writeLogoutResponse(HttpServletResponse response) throws IOException{
 //        BaseResult successResult = BaseResult.buildSuccess();
 //        successResult.setData(loginUrl);
 //        response.setCharacterEncoding("UTF-8");
@@ -230,7 +234,7 @@
 //        try {
 //            LOGGER.info("setCookieExpires::" + cookieVal + "::===" + request.getRequestURL());
 //            String domain = HttpRequestUtils.getDomain(request);
-//            HttpResponseUtil.setCookie(response, INFO_INSIDE, cookieVal, domain, "/", 60 * 60 * 2);
+//            HttpResponseUtils.setCookie(response, INFO_INSIDE, cookieVal, domain, "/", 60 * 60 * 2);
 //        } catch (Exception e) {
 //            LOGGER.error("cookie生命周期延长出错, message=[{}]" + e);
 //        }

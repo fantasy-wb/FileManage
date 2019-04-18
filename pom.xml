@@ -14,7 +14,7 @@
     <module>FileManage-dao</module>
     <module>FileManage-service-impl</module>
     <module>FileManage-web</module>
-      <module>FileManage-utils</module>
+    <module>FileManage-utils</module>
   </modules>
 
   <name>FileManage-parent</name>

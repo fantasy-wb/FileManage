@@ -19,8 +19,6 @@ import java.io.InputStream;
 /**
  * 功能描述: 文件处理类
  *
- * @author Martin
- * @version V1.0
  * @date 2018/10/12
  */
 @Component
@@ -60,9 +58,7 @@ public class FastDFSClientWrapper {
      *
      * @param fileUrl
      * @return void
-     * @author Martin
      * @date 2018/10/12
-     * @version V1.0
      */
     public void deleteFile(String fileUrl) {
 
@@ -84,16 +80,14 @@ public class FastDFSClientWrapper {
      *
      * @param fileUrl
      * @return java.io.InputStream
-     * @author Martin
      * @date 2018/10/12
-     * @version V1.0
      */
-    public InputStream downFile(String fileUrl) {
+    public byte[] downFile(String fileUrl) {
         try {
             StorePath storePath = StorePath.praseFromUrl(fileUrl);
             byte[] fileByte = storageClient.downloadFile(storePath.getGroup(), storePath.getPath(), new DownloadByteArray());
-            InputStream ins = new ByteArrayInputStream(fileByte);
-            return ins;
+            //InputStream ins = new ByteArrayInputStream(fileByte);
+            return fileByte;
         } catch (Exception e) {
             logger.error("Non IO Exception: Get File from Fast DFS failed", e);
         }
