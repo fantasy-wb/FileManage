@@ -1,56 +1,118 @@
 package cn.jxufe.web.controller.login;
 
 
+import cn.jxufe.beans.annotation.Log;
 import cn.jxufe.beans.model.User;
-import cn.jxufe.beans.result.ListResult;
-import cn.jxufe.iservice.iservice.ILoginService;
-import cn.jxufe.iservice.iservice.IUserService;
+import cn.jxufe.beans.result.BaseResult;
+
+import cn.jxufe.iservice.iservice.UserService;
+import cn.jxufe.utils.MD5Utils;
+import cn.jxufe.utils.vcode.Captcha;
+import cn.jxufe.utils.vcode.GifCaptcha;
+import cn.jxufe.web.properties.MyProperties;
 import com.alibaba.dubbo.config.annotation.Reference;
-import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authc.*;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@RequestMapping("/user")
+import static org.apache.shiro.SecurityUtils.getSubject;
+
 @Controller
 public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-
-
     @Reference
-    private ILoginService loginService;
+    private UserService userService;
 
-    @Reference
-    private IUserService userService;
+    private static final String CODE_KEY = "fantasy";
 
-    @ResponseBody
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String userLogin(String userName, String password,  HttpServletRequest request){
+    @Autowired
+    private MyProperties myProperties;
 
-        if(!StringUtils.isEmpty(userName) && !StringUtils.isEmpty(password)){
-            //logger.info("-------------->"+loginService.login(userName,password));
-            if(null != loginService.login(userName, password)){
-                return "登陆成功！";
-            }
-        }
-
-        return null;
+    @GetMapping("/login")
+    public String login() {
+        return "login";
     }
 
-
+    @PostMapping("/login")
     @ResponseBody
-    @RequestMapping(value = "/getAllUser", method = RequestMethod.GET)
-    public ListResult<User> getAllUser(int currentPage, int pageSize, HttpServletRequest request){
-        PageInfo<User> pageInfo = userService.selectByPrimaryKeyWithDepRole(currentPage,pageSize);
+    public BaseResult login(String username, String password, String code, Boolean rememberMe) {
+        if (!StringUtils.isNotBlank(code)) {
+            return BaseResult.buildFail("验证码不能为空！");
+        }
+        Session session = getSubject().getSession();
+        String sessionCode = (String) session.getAttribute(CODE_KEY);
+        if (!code.equalsIgnoreCase(sessionCode)) {
+            return BaseResult.buildFail("验证码错误！");
+        }
+        // 密码 MD5 加密
+        password = MD5Utils.encrypt(username.toLowerCase(), password);
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
+        try {
+            Subject subject = getSubject();
+            if (subject != null)
+                subject.logout();
+            //shiro登录验证
+            getSubject().login(token);
 
-        return ListResult.buildSuccess(pageInfo);
+            userService.updateLoginTime(username);
+            return BaseResult.buildSuccess();
+        } catch (UnknownAccountException | IncorrectCredentialsException | LockedAccountException e) {
+            return BaseResult.buildFail(e.getMessage());
+        } catch (AuthenticationException e) {
+            return BaseResult.buildFail("认证失败！");
+        }
+    }
+
+    @GetMapping(value = "gifCode")
+    public void getGifCode(HttpServletResponse response, HttpServletRequest request) {
+        try {
+            response.setHeader("Pragma", "No-cache");
+            response.setHeader("Cache-Control", "no-cache");
+            response.setDateHeader("Expires", 0);
+            response.setContentType("image/gif");
+
+            Captcha captcha = new GifCaptcha(
+                    myProperties.getValidateCode().getWidth(),
+                    myProperties.getValidateCode().getHeight(),
+                    myProperties.getValidateCode().getLength());
+            HttpSession session = request.getSession(true);
+            captcha.out(response.getOutputStream());
+            session.removeAttribute(CODE_KEY);
+            session.setAttribute(CODE_KEY, captcha.text().toLowerCase());
+        } catch (Exception e) {
+            logger.error("图形验证码生成失败", e);
+        }
+    }
+
+    @RequestMapping("/")
+    public String redirectIndex() {
+        return "redirect:/index";
+    }
+
+    @GetMapping("/403")
+    public String forbid() {
+        return "403";
+    }
+
+    @Log("访问系统")
+    @RequestMapping("/index")
+    public String index(Model model) {
+        // 登录成后，即可通过 Subject 获取登录的用户信息
+        User user = (User) getSubject().getPrincipal();
+        model.addAttribute("user", user);
+        return "index";
     }
 }

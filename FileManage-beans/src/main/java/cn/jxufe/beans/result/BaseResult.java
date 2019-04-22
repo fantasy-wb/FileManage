@@ -23,6 +23,12 @@ public class BaseResult {
         result.setData(data);
         return result;
     }
+    public static BaseResult buildFail(Object data) {
+        BaseResult result = new BaseResult();
+        result.code = Errcode.A00005.toString();
+        result.setData(data);
+        return result;
+    }
 
     public BaseResult buildParamError() {
         this.code = Errcode.A00003.toString();

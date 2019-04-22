@@ -1,260 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.jxufe.dao.mysql.UserMapper">
-
-    <resultMap id="RoleResultMap" type="cn.jxufe.beans.model.Role">
-        <id column="role_id" jdbcType="INTEGER" property="roleId"/>
-        <result column="dept_id" jdbcType="INTEGER" property="deptId"/>
-        <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
-        <result column="role_desc" jdbcType="VARCHAR" property="roleDesc"/>
-        <result column="create_user_id" jdbcType="INTEGER" property="createUserId"/>
-        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
-        <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId"/>
-        <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate"/>
-    </resultMap>
-
-    <resultMap id="BaseResultMap" type="cn.jxufe.beans.model.User">
-        <id column="user_id" jdbcType="INTEGER" property="userId"/>
-        <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
-        <result column="login_password" jdbcType="VARCHAR" property="loginPassword"/>
-        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
-        <result column="sex" jdbcType="INTEGER" property="sex"/>
-        <result column="email" jdbcType="VARCHAR" property="email"/>
-        <result column="status" jdbcType="BIT" property="status"/>
-        <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
-        <result column="create_user_id" jdbcType="INTEGER" property="createUserId"/>
-        <result column="last_login_date" jdbcType="TIMESTAMP" property="lastLoginDate"/>
-        <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId"/>
-        <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate"/>
-    </resultMap>
-
-    <!--***********联合查询结果字段封装**************-->
-    <resultMap id="WithRoleResultMap" type="cn.jxufe.beans.model.User">
-        <id column="user_id" jdbcType="INTEGER" property="userId"/>
-        <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
-        <result column="real_name" jdbcType="VARCHAR" property="realName"/>
-        <result column="email" jdbcType="VARCHAR" property="email"/>
-        <result column="last_login_date" jdbcType="VARCHAR" property="lastLoginDate"/>
-        <association property="role" javaType="cn.jxufe.beans.model.Role">
-            <id column="role_id" jdbcType="INTEGER" property="roleId"/>
-            <result column="dept_id" jdbcType="INTEGER" property="deptId"/>
-            <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
-            <result column="role_desc" jdbcType="VARCHAR" property="roleDesc"/>
-            <result column="create_user_id" jdbcType="INTEGER" property="createUserId"/>
-            <result column="create_date" jdbcType="TIMESTAMP" property="createDate"/>
-            <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId"/>
-            <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate"/>
-        </association>
-        <association property="department" javaType="cn.jxufe.beans.model.Department">
-            <id column="dep_id" jdbcType="INTEGER" property="depId" />
-            <result column="dep_name" jdbcType="VARCHAR" property="depName" />
-            <result column="create_user_id" jdbcType="INTEGER" property="createUserId" />
-            <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
-            <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
-            <result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
-        </association>
-    </resultMap>
-    <!--****************查询参数*******************-->
-    <sql id="Base_Column_List">
-    user_id, login_name, login_password, real_name, sex, email, status, create_date, 
-    create_user_id, last_login_date, modify_user_id, modify_date
-    </sql>
-    <sql id="WithRoleDep_Column_list">
-        u.user_id,u.login_name,u.real_name,u.status,u.email,u.last_login_date,r.role_name,d.dep_name
-    </sql>
-
-
-    <select id="findAll" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from tab_User
-        order by user_id
-    </select>
-    <!--*************员工查询界面返回信息******************-->
-    <select id="selectByPrimaryKeyWithDepRole" parameterType="java.lang.String" resultMap="WithRoleResultMap">
-        select
-        <include refid="WithRoleDep_Column_list"/>
-        FROM tab_User u
-        left join tab_UserRole ur on u.user_id = ur.user_id
-        left join tab_Role r on r.role_id = ur.role_id
-        left join tab_Department d on d.dep_id = r.dept_id
-        order by u.user_id
-    </select>
-    <!--**********根据loginName查询单个员工详细信息************-->
-    <!--<select id="selectByLoginName" resultMap="withRoleResultMap">-->
-        <!--select-->
-        <!--<include refid="WithRoleDep_column_list"/>-->
-        <!--FROM tab_User u-->
-        <!--left join tab_UserRole ur on u.user_id = ur.user_id-->
-        <!--left join tab_Role r on r.role_id = ur.role_id-->
-        <!--left join tab_Department d on d.dep_id = r.dept_id-->
-        <!--where u.login_name = #{loginName,jdbcType=VARCHAR}-->
-    <!--</select>-->
-
-    <!--<select id="getRoleByUserId" parameterType="java.lang.Integer"-->
-            <!--resultType="cn.jxufe.beans.model.Role">-->
-        <!--SELECT-->
-            <!--r.roleId-->
-        <!--FROM role r-->
-
-    <!--</select>-->
-
-    <!--*****************User类基本增删改查*********************-->
-    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from tab_User
-        where user_id = #{userId,jdbcType=INTEGER}
-    </select>
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tab_User
-    where user_id = #{userId,jdbcType=INTEGER}
-  </delete>
-    <insert id="insert" parameterType="cn.jxufe.beans.model.User">
-    insert into tab_User (user_id, login_name, login_password, 
-      real_name, sex, email, 
-      status, create_date, create_user_id, 
-      last_login_date, modify_user_id, modify_date
-      )
-    values (#{userId,jdbcType=INTEGER}, #{loginName,jdbcType=VARCHAR}, #{loginPassword,jdbcType=VARCHAR}, 
-      #{realName,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, 
-      #{status,jdbcType=BIT}, #{createDate,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=INTEGER}, 
-      #{lastLoginDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=INTEGER}, #{modifyDate,jdbcType=TIMESTAMP}
-      )
-  </insert>
-    <insert id="insertSelective" parameterType="cn.jxufe.beans.model.User">
-        insert into tab_User
-        <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="userId != null">
-                user_id,
-            </if>
-            <if test="loginName != null">
-                login_name,
-            </if>
-            <if test="loginPassword != null">
-                login_password,
-            </if>
-            <if test="realName != null">
-                real_name,
-            </if>
-            <if test="sex != null">
-                sex,
-            </if>
-            <if test="email != null">
-                email,
-            </if>
-            <if test="status != null">
-                status,
-            </if>
-            <if test="createDate != null">
-                create_date,
-            </if>
-            <if test="createUserId != null">
-                create_user_id,
-            </if>
-            <if test="lastLoginDate != null">
-                last_login_date,
-            </if>
-            <if test="modifyUserId != null">
-                modify_user_id,
-            </if>
-            <if test="modifyDate != null">
-                modify_date,
-            </if>
-        </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides=",">
-            <if test="userId != null">
-                #{userId,jdbcType=INTEGER},
-            </if>
-            <if test="loginName != null">
-                #{loginName,jdbcType=VARCHAR},
-            </if>
-            <if test="loginPassword != null">
-                #{loginPassword,jdbcType=VARCHAR},
-            </if>
-            <if test="realName != null">
-                #{realName,jdbcType=VARCHAR},
-            </if>
-            <if test="sex != null">
-                #{sex,jdbcType=INTEGER},
-            </if>
-            <if test="email != null">
-                #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="status != null">
-                #{status,jdbcType=BIT},
-            </if>
-            <if test="createDate != null">
-                #{createDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createUserId != null">
-                #{createUserId,jdbcType=INTEGER},
-            </if>
-            <if test="lastLoginDate != null">
-                #{lastLoginDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="modifyUserId != null">
-                #{modifyUserId,jdbcType=INTEGER},
-            </if>
-            <if test="modifyDate != null">
-                #{modifyDate,jdbcType=TIMESTAMP},
-            </if>
-        </trim>
-    </insert>
-    <update id="updateByPrimaryKeySelective" parameterType="cn.jxufe.beans.model.User">
-        update tab_User
-        <set>
-            <if test="loginName != null">
-                login_name = #{loginName,jdbcType=VARCHAR},
-            </if>
-            <if test="loginPassword != null">
-                login_password = #{loginPassword,jdbcType=VARCHAR},
-            </if>
-            <if test="realName != null">
-                real_name = #{realName,jdbcType=VARCHAR},
-            </if>
-            <if test="sex != null">
-                sex = #{sex,jdbcType=INTEGER},
-            </if>
-            <if test="email != null">
-                email = #{email,jdbcType=VARCHAR},
-            </if>
-            <if test="status != null">
-                status = #{status,jdbcType=BIT},
-            </if>
-            <if test="createDate != null">
-                create_date = #{createDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="createUserId != null">
-                create_user_id = #{createUserId,jdbcType=INTEGER},
-            </if>
-            <if test="lastLoginDate != null">
-                last_login_date = #{lastLoginDate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="modifyUserId != null">
-                modify_user_id = #{modifyUserId,jdbcType=INTEGER},
-            </if>
-            <if test="modifyDate != null">
-                modify_date = #{modifyDate,jdbcType=TIMESTAMP},
-            </if>
-        </set>
-        where user_id = #{userId,jdbcType=INTEGER}
-    </update>
-    <update id="updateByPrimaryKey" parameterType="cn.jxufe.beans.model.User">
-    update tab_User
-    set login_name = #{loginName,jdbcType=VARCHAR},
-      login_password = #{loginPassword,jdbcType=VARCHAR},
-      real_name = #{realName,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=INTEGER},
-      email = #{email,jdbcType=VARCHAR},
-      status = #{status,jdbcType=BIT},
-      create_date = #{createDate,jdbcType=TIMESTAMP},
-      create_user_id = #{createUserId,jdbcType=INTEGER},
-      last_login_date = #{lastLoginDate,jdbcType=TIMESTAMP},
-      modify_user_id = #{modifyUserId,jdbcType=INTEGER},
-      modify_date = #{modifyDate,jdbcType=TIMESTAMP}
-    where user_id = #{userId,jdbcType=INTEGER}
-  </update>
-
-
+  <resultMap id="BaseResultMap" type="cn.jxufe.beans.model.User">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="USER_ID" jdbcType="DECIMAL" property="userId" />
+    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="DEPT_ID" jdbcType="DECIMAL" property="deptId" />
+    <result column="EMAIL" jdbcType="VARCHAR" property="email" />
+    <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
+    <result column="STATUS" jdbcType="CHAR" property="status" />
+    <result column="CRATE_TIME" jdbcType="TIMESTAMP" property="crateTime" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+    <result column="LAST_LOGIN_TIME" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="SSEX" jdbcType="CHAR" property="ssex" />
+    <result column="THEME" jdbcType="VARCHAR" property="theme" />
+    <result column="AVATAR" jdbcType="VARCHAR" property="avatar" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+  </resultMap>
+  
+  <select id="findUserWithDept" resultType="cn.jxufe.beans.model.User" parameterType="cn.jxufe.beans.model.User">
+  		select u.user_id userId,u.username,u.email,u.mobile,u.status,u.crate_time crateTime,
+  		u.ssex,d.dept_name deptName from t_user u 
+  		left join t_dept d on(u.dept_id = d.dept_id)
+  		where 1=1
+  		<if test="username != null and username != ''">
+        	AND u.username = #{username}
+	    </if>
+	    <if test="deptId != null and deptId != ''">
+	        AND d.dept_id = #{deptId}
+	    </if>
+  		<if test="ssex != null and ssex != ''">
+	        AND u.ssex = #{ssex}
+	    </if>
+	    <if test="status != null and status != ''">
+	        AND u.status = #{status}
+	    </if>
+  		order by u.user_id
+  </select>
+  
+    
+  <select id="findUserWithRole" resultType="cn.jxufe.beans.model.UserWithRole">
+		select u.user_id userId,u.username,u.dept_id deptId,u.email,u.mobile,
+		u.status,u.ssex,ur.role_id roleId from t_user u
+		left join t_user_role ur on (u.user_id = ur.user_id)
+		where u.user_id = #{userId}
+  </select>
+  
+  <select id="findUserProfile" resultType="cn.jxufe.beans.model.User" parameterType="cn.jxufe.beans.model.User">
+	SELECT
+		U .USERNAME,
+		U .USER_ID userId,
+		D .DEPT_NAME deptName,
+		U .mobile,
+		U .email,
+		U .avatar,
+		U .description,
+		U .ssex,
+		U .dept_id deptId,
+		group_concat(r.role_name) AS roleName
+	FROM
+		t_user U
+	LEFT JOIN t_dept D ON U .DEPT_ID = D .DEPT_ID
+	LEFT JOIN t_user_role ur ON U .user_id = ur.user_id
+	LEFT JOIN t_role r ON r.role_id = ur.role_id
+	WHERE
+		U .USER_ID = #{userId}
+	GROUP BY
+		U .username,
+		D .dept_name,
+		U .mobile,
+		U .email,
+		U .avatar,
+		U .description,
+		U .ssex,
+		U .USER_ID,
+		U .dept_id
+  </select>
+  
 </mapper>

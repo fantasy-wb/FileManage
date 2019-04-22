@@ -54,7 +54,12 @@
 
 
         <!-- 指定数据库表  多个表示,可用多个table标签-->
-        <table tableName="tab_User" domainObjectName="User"/>
+        <table tableName="t_user" domainObjectName="User"/>
+        <!--<table tableName="t_user_role" domainObjectName="UserRole"/>-->
+        <!--<table tableName="t_role" domainObjectName="Role"/>-->
+        <!--<table tableName="t_role_menu" domainObjectName="RoleMenu"/>-->
+        <!--<table tableName="t_menu" domainObjectName="Menu"/>-->
+        <!--<table tableName="t_dept" domainObjectName="Department"/>-->
 
     </context>
 </generatorConfiguration>
