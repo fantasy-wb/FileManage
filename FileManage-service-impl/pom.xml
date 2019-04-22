@@ -17,6 +17,11 @@
             <artifactId>FileManage-iservice</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>cn.jxufe</groupId>
+            <artifactId>FileManage-utils</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!--<dependency>-->
             <!--<groupId>io.dubbo.springboot</groupId>-->
             <!--<artifactId>spring-boot-starter-dubbo</artifactId>-->
@@ -89,7 +94,15 @@
             <!--<artifactId>slf4j-simple</artifactId>-->
             <!--<version>1.7.25</version>-->
         <!--</dependency>-->
-
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-data-redis</artifactId>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.apache.commons</groupId>-->
+            <!--<artifactId>commons-pool2</artifactId>-->
+            <!--<version>2.6.0</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -115,6 +128,11 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>2.9.0</version>
         </dependency>
     </dependencies>
 
