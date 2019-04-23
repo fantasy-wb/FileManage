@@ -70,11 +70,11 @@ function login() {
         },
         dataType: "json",
         success: function (r) {
-            if (r.code == "A00006") {
+            if (r.code === 0) {
                 location.href = ctx + 'index';
             } else {
                 reloadCode();
-                $MB.n_warning(r.errmsg);
+                $MB.n_warning(r.msg);
                 $loginButton.html("登录");
             }
         }
