@@ -4,7 +4,7 @@
 //import cn.jxufe.beans.enums.Errcode;
 //
 ///**
-// * 普通返回结果
+// * 普通返回结果()
 // */
 //public class BaseResult0 {
 //    private Integer code;
