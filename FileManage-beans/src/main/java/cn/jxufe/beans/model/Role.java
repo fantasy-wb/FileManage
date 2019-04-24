@@ -1,126 +1,107 @@
 package cn.jxufe.beans.model;
 
+
+import cn.jxufe.beans.annotation.ExportConfig;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
+@Table(name = "t_role")
 public class Role implements Serializable {
-    private Integer roleId;
 
-    private Integer deptId;
+	private static final long serialVersionUID = -1714476694755654924L;
 
-    private String roleName;
+	@Id
+	@GeneratedValue(generator = "JDBC")
+	@Column(name = "ROLE_ID")
+	private Long roleId;
 
-    private String roleDesc;
+	@Column(name = "ROLE_NAME")
+	@ExportConfig(value = "角色")
+	private String roleName;
 
-    private Integer createUserId;
+	@Column(name = "REMARK")
+	@ExportConfig(value = "描述")
+	private String remark;
 
-    private Date createDate;
+	@Column(name = "CREATE_TIME")
+	@ExportConfig(value = "创建时间", convert = "c:cc.mrbird.common.util.poi.convert.TimeConvert")
+	private Date createTime;
 
-    private Integer modifyUserId;
+	@Column(name = "MODIFY_TIME")
+	private Date modifyTime;
 
-    private Date modifyDate;
+	/**
+	 * @return ROLE_ID
+	 */
+	public Long getRoleId() {
+		return roleId;
+	}
 
-    private List<Permission> permission;
+	/**
+	 * @param roleId
+	 */
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
+	}
 
-    public Integer getRoleId() {
-        return roleId;
-    }
+	/**
+	 * @return ROLE_NAME
+	 */
+	public String getRoleName() {
+		return roleName;
+	}
 
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
+	/**
+	 * @param roleName
+	 */
+	public void setRoleName(String roleName) {
+		this.roleName = roleName == null ? null : roleName.trim();
+	}
 
-    public Integer getDeptId() {
-        return deptId;
-    }
+	/**
+	 * @return REMARK
+	 */
+	public String getRemark() {
+		return remark;
+	}
 
-    public void setDeptId(Integer deptId) {
-        this.deptId = deptId;
-    }
+	/**
+	 * @param remark
+	 */
+	public void setRemark(String remark) {
+		this.remark = remark == null ? null : remark.trim();
+	}
 
-    public String getRoleName() {
-        return roleName;
-    }
+	/**
+	 * @return CREATE_TIME
+	 */
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName == null ? null : roleName.trim();
-    }
+	/**
+	 * @param createTime
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public String getRoleDesc() {
-        return roleDesc;
-    }
+	/**
+	 * @return MODIFY_TIME
+	 */
+	public Date getModifyTime() {
+		return modifyTime;
+	}
 
-    public void setRoleDesc(String roleDesc) {
-        this.roleDesc = roleDesc == null ? null : roleDesc.trim();
-    }
-
-    public Integer getCreateUserId() {
-        return createUserId;
-    }
-
-    public void setCreateUserId(Integer createUserId) {
-        this.createUserId = createUserId;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public Integer getModifyUserId() {
-        return modifyUserId;
-    }
-
-    public void setModifyUserId(Integer modifyUserId) {
-        this.modifyUserId = modifyUserId;
-    }
-
-    public Date getModifyDate() {
-        return modifyDate;
-    }
-
-    public void setModifyDate(Date modifyDate) {
-        this.modifyDate = modifyDate;
-    }
-
-    public List<Permission> getPermission() {
-        return permission;
-    }
-
-    public void setPermission(List<Permission> permission) {
-        this.permission = permission;
-    }
-
-    public  Role(){}
-
-    public Role(Integer roleId, Integer deptId, String roleName, String roleDesc, Integer createUserId, Date createDate, Integer modifyUserId, Date modifyDate, List<Permission> permission) {
-        this.roleId = roleId;
-        this.deptId = deptId;
-        this.roleName = roleName;
-        this.roleDesc = roleDesc;
-        this.createUserId = createUserId;
-        this.createDate = createDate;
-        this.modifyUserId = modifyUserId;
-        this.modifyDate = modifyDate;
-        this.permission = permission;
-    }
-
-    @Override
-    public String toString() {
-        return "Role{" +
-                "roleId=" + roleId +
-                ", deptId=" + deptId +
-                ", roleName='" + roleName + '\'' +
-                ", roleDesc='" + roleDesc + '\'' +
-                ", createUserId=" + createUserId +
-                ", createDate=" + createDate +
-                ", modifyUserId=" + modifyUserId +
-                ", modifyDate=" + modifyDate +
-                ", permission=" + permission +
-                '}';
-    }
+	/**
+	 * @param modifyTime
+	 */
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
+	}
 }

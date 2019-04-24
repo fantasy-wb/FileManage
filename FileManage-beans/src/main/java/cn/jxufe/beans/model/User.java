@@ -1,183 +1,318 @@
 package cn.jxufe.beans.model;
 
+
+import cn.jxufe.beans.annotation.ExportConfig;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@Table(name = "t_user")
 public class User implements Serializable {
 
-    /************基本字段**************/
-    private Integer userId;
+	private static final long serialVersionUID = -4852732617765810959L;
+	/**
+	 * 账户状态
+	 */
+	public static final String STATUS_VALID = "1";
 
-    private String loginName;
+	public static final String STATUS_LOCK = "0";
 
-    private String loginPassword;
+	public static final String DEFAULT_THEME = "green";
 
-    private String realName;
+	public static final String DEFAULT_AVATAR = "default.jpg";
 
-    private Integer sex;
+	/**
+	 * 性别
+	 */
+	public static final String SEX_MALE = "0";
 
-    private String email;
+	public static final String SEX_FEMALE = "1";
 
-    private Boolean status;
+	public static final String SEX_UNKNOW = "2";
 
-    private Date createDate;
+	@Id
+	@GeneratedValue(generator = "JDBC")
+	@Column(name = "USER_ID")
+	private Long userId;
 
-    private Integer createUserId;
+	@Column(name = "USERNAME")
+	@ExportConfig(value = "用户名")
+	private String username;
 
-    private Date lastLoginDate;
+	@Column(name = "PASSWORD")
+	private String password;
 
-    private Integer modifyUserId;
+	@Column(name = "DEPT_ID")
+	private Long deptId;
 
-    private Date modifyDate;
+	@Transient
+	@ExportConfig(value = "部门")
+	private String deptName;
 
-    private Role role;
+	@Column(name = "EMAIL")
+	@ExportConfig(value = "邮箱")
+	private String email;
 
-    private Department department;
+	@Column(name = "MOBILE")
+	@ExportConfig(value = "手机")
+	private String mobile;
 
-    /***********基本 get set 方法*************/
-    public Integer getUserId() {
-        return userId;
-    }
+	@Column(name = "STATUS")
+	@ExportConfig(value = "状态", convert = "s:0=锁定,1=有效")
+	private String status = STATUS_VALID;
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
+	@Column(name = "CRATE_TIME")
+	@ExportConfig(value = "创建时间", convert = "c:cc.mrbird.common.util.poi.convert.TimeConvert")
+	private Date crateTime;
 
-    public String getLoginName() {
-        return loginName;
-    }
+	@Column(name = "MODIFY_TIME")
+	private Date modifyTime;
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName == null ? null : loginName.trim();
-    }
+	@Column(name = "LAST_LOGIN_TIME")
+	private Date lastLoginTime;
 
-    public String getLoginPassword() {
-        return loginPassword;
-    }
+	@Column(name = "SSEX")
+	@ExportConfig(value = "性别", convert = "s:0=男,1=女,2=保密")
+	private String ssex;
 
-    public void setLoginPassword(String loginPassword) {
-        this.loginPassword = loginPassword == null ? null : loginPassword.trim();
-    }
+	@Column(name = "THEME")
+	private String theme;
 
-    public String getRealName() {
-        return realName;
-    }
+	@Column(name = "AVATAR")
+	private String avatar;
 
-    public void setRealName(String realName) {
-        this.realName = realName == null ? null : realName.trim();
-    }
+	@Column(name = "DESCRIPTION")
+	private String description;
 
-    public Integer getSex() {
-        return sex;
-    }
+	@Transient
+	private String roleName;
 
-    public void setSex(Integer sex) {
-        this.sex = sex;
-    }
+	/**
+	 * @return USER_ID
+	 */
+	public Long getUserId() {
+		return userId;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	/**
+	 * @param userId
+	 */
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 
-    public void setEmail(String email) {
-        this.email = email == null ? null : email.trim();
-    }
+	/**
+	 * @return USERNAME
+	 */
+	public String getUsername() {
+		return username;
+	}
 
-    public Boolean getStatus() {
-        return status;
-    }
+	/**
+	 * @param username
+	 */
+	public void setUsername(String username) {
+		this.username = username == null ? null : username.trim();
+	}
 
-    public void setStatus(Boolean status) {
-        this.status = status;
-    }
+	/**
+	 * @return PASSWORD
+	 */
+	public String getPassword() {
+		return password;
+	}
 
-    public Date getCreateDate() {
-        return createDate;
-    }
+	/**
+	 * @param password
+	 */
+	public void setPassword(String password) {
+		this.password = password == null ? null : password.trim();
+	}
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
+	/**
+	 * @return DEPT_ID
+	 */
+	public Long getDeptId() {
+		return deptId;
+	}
 
-    public Integer getCreateUserId() {
-        return createUserId;
-    }
+	/**
+	 * @param deptId
+	 */
+	public void setDeptId(Long deptId) {
+		this.deptId = deptId;
+	}
 
-    public void setCreateUserId(Integer createUserId) {
-        this.createUserId = createUserId;
-    }
+	/**
+	 * @return EMAIL
+	 */
+	public String getEmail() {
+		return email;
+	}
 
-    public Date getLastLoginDate() {
-        return lastLoginDate;
-    }
+	/**
+	 * @param email
+	 */
+	public void setEmail(String email) {
+		this.email = email == null ? null : email.trim();
+	}
 
-    public void setLastLoginDate(Date lastLoginDate) {
-        this.lastLoginDate = lastLoginDate;
-    }
+	/**
+	 * @return MOBILE
+	 */
+	public String getMobile() {
+		return mobile;
+	}
 
-    public Integer getModifyUserId() {
-        return modifyUserId;
-    }
+	/**
+	 * @param mobile
+	 */
+	public void setMobile(String mobile) {
+		this.mobile = mobile == null ? null : mobile.trim();
+	}
 
-    public void setModifyUserId(Integer modifyUserId) {
-        this.modifyUserId = modifyUserId;
-    }
+	/**
+	 * @return STATUS
+	 */
+	public String getStatus() {
+		return status;
+	}
 
-    public Date getModifyDate() {
-        return modifyDate;
-    }
+	/**
+	 * @param status
+	 */
+	public void setStatus(String status) {
+		this.status = status == null ? null : status.trim();
+	}
 
-    public void setModifyDate(Date modifyDate) {
-        this.modifyDate = modifyDate;
-    }
+	/**
+	 * @return CRATE_TIME
+	 */
+	public Date getCrateTime() {
+		return crateTime;
+	}
 
-    public Role getRole(){return role;}
-    public void setRole(Role role){this.role = role;}
+	/**
+	 * @param crateTime
+	 */
+	public void setCrateTime(Date crateTime) {
+		this.crateTime = crateTime;
+	}
 
-    public Department getDepartment() {
-        return department;
-    }
+	/**
+	 * @return MODIFY_TIME
+	 */
+	public Date getModifyTime() {
+		return modifyTime;
+	}
 
-    public void setDepartment(Department department) {
-        this.department = department;
-    }
+	/**
+	 * @param modifyTime
+	 */
+	public void setModifyTime(Date modifyTime) {
+		this.modifyTime = modifyTime;
+	}
 
-    public User(){}
+	/**
+	 * @return LAST_LOGIN_TIME
+	 */
+	public Date getLastLoginTime() {
+		return lastLoginTime;
+	}
 
-    public User(Integer userId, String loginName, String loginPassword, String realName, Integer sex, String email, Boolean status, Date createDate, Integer createUserId, Date lastLoginDate, Integer modifyUserId, Date modifyDate, Role role, Department department) {
-        this.userId = userId;
-        this.loginName = loginName;
-        this.loginPassword = loginPassword;
-        this.realName = realName;
-        this.sex = sex;
-        this.email = email;
-        this.status = status;
-        this.createDate = createDate;
-        this.createUserId = createUserId;
-        this.lastLoginDate = lastLoginDate;
-        this.modifyUserId = modifyUserId;
-        this.modifyDate = modifyDate;
-        this.role = role;
-        this.department = department;
-    }
+	/**
+	 * @param lastLoginTime
+	 */
+	public void setLastLoginTime(Date lastLoginTime) {
+		this.lastLoginTime = lastLoginTime;
+	}
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "userId=" + userId +
-                ", loginName='" + loginName + '\'' +
-                ", loginPassword='" + loginPassword + '\'' +
-                ", realName='" + realName + '\'' +
-                ", sex=" + sex +
-                ", email='" + email + '\'' +
-                ", status=" + status +
-                ", createDate=" + createDate +
-                ", createUserId=" + createUserId +
-                ", lastLoginDate=" + lastLoginDate +
-                ", modifyUserId=" + modifyUserId +
-                ", modifyDate=" + modifyDate +
-                ", role=" + role +
-                ", department=" + department +
-                '}';
-    }
+	/**
+	 * @return SSEX
+	 */
+	public String getSsex() {
+		return ssex;
+	}
+
+	/**
+	 * @param ssex
+	 */
+	public void setSsex(String ssex) {
+		this.ssex = ssex == null ? null : ssex.trim();
+	}
+
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+
+	public String getDeptName() {
+		return deptName;
+	}
+
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"userId=" + userId +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				", deptId=" + deptId +
+				", deptName='" + deptName + '\'' +
+				", email='" + email + '\'' +
+				", mobile='" + mobile + '\'' +
+				", status='" + status + '\'' +
+				", crateTime=" + crateTime +
+				", modifyTime=" + modifyTime +
+				", lastLoginTime=" + lastLoginTime +
+				", ssex='" + ssex + '\'' +
+				", theme='" + theme + '\'' +
+				", avatar='" + avatar + '\'' +
+				", description='" + description + '\'' +
+				", roleName='" + roleName + '\'' +
+				'}';
+	}
+
+	/**
+	 * shiro-redis v3.1.0 必须要有getAuthCacheKey()或者getId()方法
+	 * # Principal id field name. The field which you can get unique id to identify this principal.
+	 * # For example, if you use UserInfo as Principal class, the id field maybe userId, userName, email, etc.
+	 * # Remember to add getter to this id field. For example, getUserId(), getUserName(), getEmail(), etc.
+	 * # Default value is authCacheKey or id, that means your principal object has a method called "getAuthCacheKey()" or "getId()"
+	 * @return userId as Principal id field name
+	 */
+	public Long getAuthCacheKey() {
+		return userId;
+	}
 }

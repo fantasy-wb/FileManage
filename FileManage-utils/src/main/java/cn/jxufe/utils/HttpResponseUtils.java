@@ -12,7 +12,7 @@ import java.util.Date;
 
 /**
  * HttpResponseUtil 封装HttpResponse的方法
- * @version
+ *
  */
 public class HttpResponseUtils {
 

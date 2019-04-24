@@ -16,7 +16,7 @@ import java.util.*;
 
 /**
  * HttpRequestInfo 对http Request进行进一步的封装，可以获取cookie、参数等信息
- * @version 0.0.1
+ *
  */
 public class HttpRequestUtils {
 
