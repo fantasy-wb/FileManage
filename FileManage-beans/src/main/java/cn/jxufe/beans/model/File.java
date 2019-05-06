@@ -1,111 +1,228 @@
 package cn.jxufe.beans.model;
 
-import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.*;
 
-public class File implements Serializable {
+@Table(name = "t_file")
+public class File {
+    @Column(name = "file_id")
     private Integer fileId;
 
+    @Column(name = "file_name")
     private String fileName;
 
-    private String filePath;
+    @Column(name = "file_size")
+    private Float fileSize;
 
-    private Integer depId;
+    @Column(name = "file_url")
+    private String fileUrl;
 
-    private Boolean isImpot;
+    @Column(name = "is_directory")
+    private Boolean isDirectory;
 
+    @Column(name = "is_star")
+    private Boolean isStar;
+
+    @Column(name = "dept_id")
+    private Integer deptId;
+
+    @Column(name = "user_id")
+    private Integer userId;
+
+    @Column(name = "parent_url")
+    private String parentUrl;
+
+    @Column(name = "create_user_id")
     private Integer createUserId;
 
-    private Date createDate;
-
+    @Column(name = "modify_user_id")
     private Integer modifyUserId;
 
+    @Column(name = "create_date")
+    private Date createDate;
+
+    @Column(name = "modify_date")
     private Date modifyDate;
 
+    /**
+     * @return file_id
+     */
     public Integer getFileId() {
         return fileId;
     }
 
+    /**
+     * @param fileId
+     */
     public void setFileId(Integer fileId) {
         this.fileId = fileId;
     }
 
+    /**
+     * @return file_name
+     */
     public String getFileName() {
         return fileName;
     }
 
+    /**
+     * @param fileName
+     */
     public void setFileName(String fileName) {
         this.fileName = fileName == null ? null : fileName.trim();
     }
 
-    public String getFilePath() {
-        return filePath;
+    /**
+     * @return file_size
+     */
+    public Float getFileSize() {
+        return fileSize;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath == null ? null : filePath.trim();
+    /**
+     * @param fileSize
+     */
+    public void setFileSize(Float fileSize) {
+        this.fileSize = fileSize;
     }
 
-    public Integer getDepId() {
-        return depId;
+    /**
+     * @return file_url
+     */
+    public String getFileUrl() {
+        return fileUrl;
     }
 
-    public void setDepId(Integer depId) {
-        this.depId = depId;
+    /**
+     * @param fileUrl
+     */
+    public void setFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl == null ? null : fileUrl.trim();
     }
 
-    public Boolean getIsImpot() {
-        return isImpot;
+    /**
+     * @return is_directory
+     */
+    public Boolean getIsDirectory() {
+        return isDirectory;
     }
 
-    public void setIsImpot(Boolean isImpot) {
-        this.isImpot = isImpot;
+    /**
+     * @param isDirectory
+     */
+    public void setIsDirectory(Boolean isDirectory) {
+        this.isDirectory = isDirectory;
     }
 
+    /**
+     * @return is_star
+     */
+    public Boolean getIsStar() {
+        return isStar;
+    }
+
+    /**
+     * @param isStar
+     */
+    public void setIsStar(Boolean isStar) {
+        this.isStar = isStar;
+    }
+
+    /**
+     * @return dept_id
+     */
+    public Integer getDeptId() {
+        return deptId;
+    }
+
+    /**
+     * @param deptId
+     */
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId;
+    }
+
+    /**
+     * @return user_id
+     */
+    public Integer getUserId() {
+        return userId;
+    }
+
+    /**
+     * @param userId
+     */
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * @return parent_url
+     */
+    public String getParentUrl() {
+        return parentUrl;
+    }
+
+    /**
+     * @param parentUrl
+     */
+    public void setParentUrl(String parentUrl) {
+        this.parentUrl = parentUrl == null ? null : parentUrl.trim();
+    }
+
+    /**
+     * @return create_user_id
+     */
     public Integer getCreateUserId() {
         return createUserId;
     }
 
+    /**
+     * @param createUserId
+     */
     public void setCreateUserId(Integer createUserId) {
         this.createUserId = createUserId;
     }
 
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
+    /**
+     * @return modify_user_id
+     */
     public Integer getModifyUserId() {
         return modifyUserId;
     }
 
+    /**
+     * @param modifyUserId
+     */
     public void setModifyUserId(Integer modifyUserId) {
         this.modifyUserId = modifyUserId;
     }
 
+    /**
+     * @return create_date
+     */
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    /**
+     * @param createDate
+     */
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    /**
+     * @return modify_date
+     */
     public Date getModifyDate() {
         return modifyDate;
     }
 
+    /**
+     * @param modifyDate
+     */
     public void setModifyDate(Date modifyDate) {
-        this.modifyDate = modifyDate;
-    }
-
-    public File() {
-    }
-
-    public File(Integer fileId, String fileName, String filePath, Integer depId, Boolean isImpot, Integer createUserId, Date createDate, Integer modifyUserId, Date modifyDate) {
-        this.fileId = fileId;
-        this.fileName = fileName;
-        this.filePath = filePath;
-        this.depId = depId;
-        this.isImpot = isImpot;
-        this.createUserId = createUserId;
-        this.createDate = createDate;
-        this.modifyUserId = modifyUserId;
         this.modifyDate = modifyDate;
     }
 }

@@ -2,13 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.jxufe.dao.mysql.UserMapper">
   <resultMap id="BaseResultMap" type="cn.jxufe.beans.model.User">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="USER_ID" jdbcType="DECIMAL" property="userId" />
+    <id column="USER_ID" jdbcType="BIGINT" property="userId" />
     <result column="USERNAME" jdbcType="VARCHAR" property="username" />
     <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
-    <result column="DEPT_ID" jdbcType="DECIMAL" property="deptId" />
+    <result column="DEPT_ID" jdbcType="BIGINT" property="deptId" />
     <result column="EMAIL" jdbcType="VARCHAR" property="email" />
     <result column="MOBILE" jdbcType="VARCHAR" property="mobile" />
     <result column="STATUS" jdbcType="CHAR" property="status" />
@@ -18,37 +15,37 @@
     <result column="SSEX" jdbcType="CHAR" property="ssex" />
     <result column="THEME" jdbcType="VARCHAR" property="theme" />
     <result column="AVATAR" jdbcType="VARCHAR" property="avatar" />
-    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
   </resultMap>
-  
+
   <select id="findUserWithDept" resultType="cn.jxufe.beans.model.User" parameterType="cn.jxufe.beans.model.User">
-  		select u.user_id userId,u.username,u.email,u.mobile,u.status,u.crate_time crateTime,
-  		u.ssex,d.dept_name deptName from t_user u 
-  		left join t_dept d on(u.dept_id = d.dept_id)
-  		where 1=1
-  		<if test="username != null and username != ''">
-        	AND u.username = #{username}
-	    </if>
-	    <if test="deptId != null and deptId != ''">
-	        AND d.dept_id = #{deptId}
-	    </if>
-  		<if test="ssex != null and ssex != ''">
-	        AND u.ssex = #{ssex}
-	    </if>
-	    <if test="status != null and status != ''">
-	        AND u.status = #{status}
-	    </if>
-  		order by u.user_id
+    select u.user_id userId,u.username,u.email,u.mobile,u.status,u.crate_time crateTime,
+    u.ssex,d.dept_name deptName from t_user u
+    left join t_dept d on(u.dept_id = d.dept_id)
+    where 1=1
+    <if test="username != null and username != ''">
+      AND u.username = #{username}
+    </if>
+    <if test="deptId != null and deptId != ''">
+      AND d.dept_id = #{deptId}
+    </if>
+    <if test="ssex != null and ssex != ''">
+      AND u.ssex = #{ssex}
+    </if>
+    <if test="status != null and status != ''">
+      AND u.status = #{status}
+    </if>
+    order by u.user_id
   </select>
-  
-    
+
+
   <select id="findUserWithRole" resultType="cn.jxufe.beans.model.UserWithRole">
 		select u.user_id userId,u.username,u.dept_id deptId,u.email,u.mobile,
 		u.status,u.ssex,ur.role_id roleId from t_user u
 		left join t_user_role ur on (u.user_id = ur.user_id)
 		where u.user_id = #{userId}
   </select>
-  
+
   <select id="findUserProfile" resultType="cn.jxufe.beans.model.User" parameterType="cn.jxufe.beans.model.User">
 	SELECT
 		U .USERNAME,
@@ -79,5 +76,6 @@
 		U .USER_ID,
 		U .dept_id
   </select>
+
   
 </mapper>
