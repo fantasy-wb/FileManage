@@ -5,17 +5,17 @@
 <generatorConfiguration>
     <!--mysql 连接数据库jar 这里选择自己本地位置-->
     <classPathEntry
-            location="D:\Maven_Repository\mysql\mysql-connector-java\8.0.11\mysql-connector-java-8.0.11.jar"/>
-    <context id="testTables" targetRuntime="MyBatis3">
+            location="D:\MyRepository\mysql\mysql-connector-java\8.0.11\mysql-connector-java-8.0.11.jar"/>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://94.191.85.22:3306/file-online-manager?serverTimezone=UTC"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/mrbird?serverTimezone=UTC"
                         userId="root"
-                        password="123456">
+                        password="1234">
         </jdbcConnection>
         <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 和
            NUMERIC 类型解析为java.math.BigDecimal -->
@@ -54,12 +54,12 @@
 
 
         <!-- 指定数据库表  多个表示,可用多个table标签-->
-        <table tableName="t_user" domainObjectName="User"/>
+        <!--<table tableName="t_user" domainObjectName="User"/>-->
         <!--<table tableName="t_user_role" domainObjectName="UserRole"/>-->
         <!--<table tableName="t_role" domainObjectName="Role"/>-->
         <!--<table tableName="t_role_menu" domainObjectName="RoleMenu"/>-->
         <!--<table tableName="t_menu" domainObjectName="Menu"/>-->
         <!--<table tableName="t_dept" domainObjectName="Department"/>-->
-
+        <table tableName="t_file" domainObjectName="File"/>
     </context>
 </generatorConfiguration>

@@ -1,6 +1,7 @@
 var $MB = (function () {
     var bootstrapTable_default = {
         method: 'get',
+        //contentType : "application/x-www-form-urlencoded",
         striped: true,
         cache: false,
         pagination: true,
@@ -303,7 +304,18 @@ var $MB = (function () {
         });
     }
 
-    /** 
+    /**
+     * file类数据加载
+     * @param id
+     * @param settings
+     * @private
+     */
+    function _reloadTable(id,settings){
+        var params = $.extend({}, bootstrapTable_default, settings);
+        $('#' + id).bootstrapTable('refresh',params);
+    }
+
+    /**
      * ajax 拦截 403 状态码
      */
     $.ajaxSetup({
@@ -313,7 +325,7 @@ var $MB = (function () {
 		    }
         }
     });
-    
+
     return {
         initTable: function (id, setting) {
             _initTable(id, setting);
@@ -328,6 +340,9 @@ var $MB = (function () {
         },
         refreshTable: function (id) {
             $('#' + id).bootstrapTable('refresh');
+        },
+        reloadTable:function(id, settings){
+            _reloadTable(id, settings);
         },
         n_default: function (message) {
             _notify(message, "inverse");

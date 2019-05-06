@@ -40,8 +40,7 @@
 	    </if>
   		order by u.user_id
   </select>
-  
-    
+
   <select id="findUserWithRole" resultType="cn.jxufe.beans.model.UserWithRole">
 		select u.user_id userId,u.username,u.dept_id deptId,u.email,u.mobile,
 		u.status,u.ssex,ur.role_id roleId from t_user u
