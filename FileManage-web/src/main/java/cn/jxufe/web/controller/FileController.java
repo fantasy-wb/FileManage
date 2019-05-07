@@ -7,6 +7,7 @@ import cn.jxufe.beans.result.BaseResult;
 import cn.jxufe.iservice.iservice.FileService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class FileController extends BaseController{
@@ -22,7 +24,7 @@ public class FileController extends BaseController{
     private FileService fileService;
 
     @RequestMapping("personalfile")
-    @RequiresPermissions("file:personal")
+    //@RequiresPermissions("file:personal")
     public String index(Model model) {
         User user = super.getCurrentUser();
         model.addAttribute("user", user);
@@ -32,28 +34,21 @@ public class FileController extends BaseController{
     @RequestMapping(value = "file/addDir")
     @RequiresPermissions("file:addDir")
     public BaseResult addDirectory(Integer targetFile, String newFile, HttpServletRequest request){
-//        User curUser = (User)request.getSession().getAttribute("curUser");
-//        try {
-//            //fileService.addDir(targetFile, newFile);
-//            return BaseResult.buildSuccess("新建文件夹成功！");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         return BaseResult.buildFail("新建文件夹失败！");
     }
 
-    @RequestMapping("file/all")
+    @RequestMapping("file/list")
     @ResponseBody
-    public BaseResult selectAll(){
-         List<File> files = fileService.selectAll();
-         return BaseResult.buildSuccess(files);
+    public Map<String, Object> selectAll(QueryRequest request, File file){
+        file.setUserId(167);
+        List<File> files = this.fileService.findFileByParent(file);
+        return super.selectByPageNumSize(request, () -> this.fileService.selectAll());
     }
 
     @ResponseBody
     @RequestMapping("file/test")
     public BaseResult fileTest(QueryRequest request,String parentUrl,User user, HttpServletRequest httpServletRequest){
-        //User curUser = (User)request.getSession().getAttribute("curUser");
-        boolean i = true;
+
         return BaseResult.buildFail("新建文件夹失败！");
     }
 

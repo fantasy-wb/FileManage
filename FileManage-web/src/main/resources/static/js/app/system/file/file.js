@@ -52,7 +52,7 @@ function search() {
 
 $("#fileTable").on("dbl-click-row.bs.table", function (e, row, $element) {
 
-    if(row.fileType == 'directory') {
+    if(row.fileType === 'directory') {
         $.ajax({
             url: ctx + "file/list",
             data: {
