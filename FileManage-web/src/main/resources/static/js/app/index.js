@@ -150,7 +150,7 @@ function loadMain(obj) {
     // 加载内容
     var $name = $this.attr("name");
     $.post(ctx + $name, {}, function (r) {
-        if(r.code === 500){
+        if (r.code === 500) {
             $MB.n_danger(r.msg);
             return;
         }

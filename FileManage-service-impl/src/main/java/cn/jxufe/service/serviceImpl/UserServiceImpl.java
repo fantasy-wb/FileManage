@@ -10,13 +10,11 @@ import cn.jxufe.dao.mysql.UserRoleMapper;
 import cn.jxufe.iservice.iservice.UserRoleService;
 import cn.jxufe.iservice.iservice.UserService;
 import cn.jxufe.utils.MD5Utils;
-import com.alibaba.dubbo.config.annotation.Reference;
 import com.alibaba.dubbo.config.annotation.Service;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 

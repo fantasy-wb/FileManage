@@ -5,222 +5,338 @@ import javax.persistence.*;
 
 @Table(name = "t_file")
 public class File {
-    @Column(name = "file_id")
+    /**
+     * 文件唯一标志符ID
+     */
+    @Id
+    @Column(name = "FILE_ID")
     private Integer fileId;
 
-    @Column(name = "file_name")
+    /**
+     * 文件/文件夹名
+     */
+    @Column(name = "FILE_NAME")
     private String fileName;
 
-    @Column(name = "file_size")
-    private Float fileSize;
+    /**
+     * directory类型:文件夹
+     */
+    @Column(name = "FILE_TYPE")
+    private String fileType;
 
-    @Column(name = "file_url")
+    /**
+     * 文件大小
+     */
+    @Column(name = "FILE_SIZE")
+    private Double fileSize;
+
+    /**
+     * 文件实际存放路径
+     */
+    @Column(name = "FILE_URL")
     private String fileUrl;
 
-    @Column(name = "is_directory")
-    private Boolean isDirectory;
+    /**
+     * 1:标记文件
+     */
+    @Column(name = "IS_MARK")
+    private Boolean isMark;
 
-    @Column(name = "is_star")
-    private Boolean isStar;
+    /**
+     * 文件是否有效，有效：1，无效：0
+     */
+    @Column(name = "IS_ACTIVE")
+    private Boolean isActive;
 
-    @Column(name = "dept_id")
-    private Integer deptId;
-
-    @Column(name = "user_id")
-    private Integer userId;
-
-    @Column(name = "parent_url")
+    /**
+     * 上级文件夹路径
+     */
+    @Column(name = "PARENT_URL")
     private String parentUrl;
 
-    @Column(name = "create_user_id")
+    /**
+     * 所属部门
+     */
+    @Column(name = "DEPT_ID")
+    private Integer deptId;
+
+    /**
+     * null：共享文件
+     */
+    @Column(name = "USER_ID")
+    private Integer userId;
+
+    /**
+     * 上传用户
+     */
+    @Column(name = "CREATE_USER_ID")
     private Integer createUserId;
 
-    @Column(name = "modify_user_id")
-    private Integer modifyUserId;
-
-    @Column(name = "create_date")
+    /**
+     * 上传日期
+     */
+    @Column(name = "CREATE_DATE")
     private Date createDate;
 
-    @Column(name = "modify_date")
+    /**
+     * 修改人员
+     */
+    @Column(name = "MODIFY_USER_ID")
+    private Integer modifyUserId;
+
+    /**
+     * 修改日期
+     */
+    @Column(name = "MODIFY_DATE")
     private Date modifyDate;
 
     /**
-     * @return file_id
+     * 获取文件唯一标志符ID
+     *
+     * @return FILE_ID - 文件唯一标志符ID
      */
     public Integer getFileId() {
         return fileId;
     }
 
     /**
-     * @param fileId
+     * 设置文件唯一标志符ID
+     *
+     * @param fileId 文件唯一标志符ID
      */
     public void setFileId(Integer fileId) {
         this.fileId = fileId;
     }
 
     /**
-     * @return file_name
+     * 获取文件/文件夹名
+     *
+     * @return FILE_NAME - 文件/文件夹名
      */
     public String getFileName() {
         return fileName;
     }
 
     /**
-     * @param fileName
+     * 设置文件/文件夹名
+     *
+     * @param fileName 文件/文件夹名
      */
     public void setFileName(String fileName) {
         this.fileName = fileName == null ? null : fileName.trim();
     }
 
     /**
-     * @return file_size
+     * 获取directory类型:文件夹
+     *
+     * @return FILE_TYPE - directory类型:文件夹
      */
-    public Float getFileSize() {
+    public String getFileType() {
+        return fileType;
+    }
+
+    /**
+     * 设置directory类型:文件夹
+     *
+     * @param fileType directory类型:文件夹
+     */
+    public void setFileType(String fileType) {
+        this.fileType = fileType == null ? null : fileType.trim();
+    }
+
+    /**
+     * 获取文件大小
+     *
+     * @return FILE_SIZE - 文件大小
+     */
+    public Double getFileSize() {
         return fileSize;
     }
 
     /**
-     * @param fileSize
+     * 设置文件大小
+     *
+     * @param fileSize 文件大小
      */
-    public void setFileSize(Float fileSize) {
+    public void setFileSize(Double fileSize) {
         this.fileSize = fileSize;
     }
 
     /**
-     * @return file_url
+     * 获取文件实际存放路径
+     *
+     * @return FILE_URL - 文件实际存放路径
      */
     public String getFileUrl() {
         return fileUrl;
     }
 
     /**
-     * @param fileUrl
+     * 设置文件实际存放路径
+     *
+     * @param fileUrl 文件实际存放路径
      */
     public void setFileUrl(String fileUrl) {
         this.fileUrl = fileUrl == null ? null : fileUrl.trim();
     }
 
     /**
-     * @return is_directory
+     * 获取1:标记文件
+     *
+     * @return IS_MARK - 1:标记文件
      */
-    public Boolean getIsDirectory() {
-        return isDirectory;
+    public Boolean getIsMark() {
+        return isMark;
     }
 
     /**
-     * @param isDirectory
+     * 设置1:标记文件
+     *
+     * @param isMark 1:标记文件
      */
-    public void setIsDirectory(Boolean isDirectory) {
-        this.isDirectory = isDirectory;
+    public void setIsMark(Boolean isMark) {
+        this.isMark = isMark;
     }
 
     /**
-     * @return is_star
+     * 获取文件是否有效，有效：1，无效：0
+     *
+     * @return IS_ACTIVE - 文件是否有效，有效：1，无效：0
      */
-    public Boolean getIsStar() {
-        return isStar;
+    public Boolean getIsActive() {
+        return isActive;
     }
 
     /**
-     * @param isStar
+     * 设置文件是否有效，有效：1，无效：0
+     *
+     * @param isActive 文件是否有效，有效：1，无效：0
      */
-    public void setIsStar(Boolean isStar) {
-        this.isStar = isStar;
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
     }
 
     /**
-     * @return dept_id
-     */
-    public Integer getDeptId() {
-        return deptId;
-    }
-
-    /**
-     * @param deptId
-     */
-    public void setDeptId(Integer deptId) {
-        this.deptId = deptId;
-    }
-
-    /**
-     * @return user_id
-     */
-    public Integer getUserId() {
-        return userId;
-    }
-
-    /**
-     * @param userId
-     */
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    /**
-     * @return parent_url
+     * 获取上级文件夹路径
+     *
+     * @return PARENT_URL - 上级文件夹路径
      */
     public String getParentUrl() {
         return parentUrl;
     }
 
     /**
-     * @param parentUrl
+     * 设置上级文件夹路径
+     *
+     * @param parentUrl 上级文件夹路径
      */
     public void setParentUrl(String parentUrl) {
         this.parentUrl = parentUrl == null ? null : parentUrl.trim();
     }
 
     /**
-     * @return create_user_id
+     * 获取所属部门
+     *
+     * @return DEPT_ID - 所属部门
+     */
+    public Integer getDeptId() {
+        return deptId;
+    }
+
+    /**
+     * 设置所属部门
+     *
+     * @param deptId 所属部门
+     */
+    public void setDeptId(Integer deptId) {
+        this.deptId = deptId;
+    }
+
+    /**
+     * 获取null：共享文件
+     *
+     * @return USER_ID - null：共享文件
+     */
+    public Integer getUserId() {
+        return userId;
+    }
+
+    /**
+     * 设置null：共享文件
+     *
+     * @param userId null：共享文件
+     */
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * 获取上传用户
+     *
+     * @return CREATE_USER_ID - 上传用户
      */
     public Integer getCreateUserId() {
         return createUserId;
     }
 
     /**
-     * @param createUserId
+     * 设置上传用户
+     *
+     * @param createUserId 上传用户
      */
     public void setCreateUserId(Integer createUserId) {
         this.createUserId = createUserId;
     }
 
     /**
-     * @return modify_user_id
-     */
-    public Integer getModifyUserId() {
-        return modifyUserId;
-    }
-
-    /**
-     * @param modifyUserId
-     */
-    public void setModifyUserId(Integer modifyUserId) {
-        this.modifyUserId = modifyUserId;
-    }
-
-    /**
-     * @return create_date
+     * 获取上传日期
+     *
+     * @return CREATE_DATE - 上传日期
      */
     public Date getCreateDate() {
         return createDate;
     }
 
     /**
-     * @param createDate
+     * 设置上传日期
+     *
+     * @param createDate 上传日期
      */
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
     /**
-     * @return modify_date
+     * 获取修改人员
+     *
+     * @return MODIFY_USER_ID - 修改人员
+     */
+    public Integer getModifyUserId() {
+        return modifyUserId;
+    }
+
+    /**
+     * 设置修改人员
+     *
+     * @param modifyUserId 修改人员
+     */
+    public void setModifyUserId(Integer modifyUserId) {
+        this.modifyUserId = modifyUserId;
+    }
+
+    /**
+     * 获取修改日期
+     *
+     * @return MODIFY_DATE - 修改日期
      */
     public Date getModifyDate() {
         return modifyDate;
     }
 
     /**
-     * @param modifyDate
+     * 设置修改日期
+     *
+     * @param modifyDate 修改日期
      */
     public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;

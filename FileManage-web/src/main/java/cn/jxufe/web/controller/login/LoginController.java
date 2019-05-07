@@ -49,13 +49,18 @@ public class LoginController {
     @PostMapping("/login")
     @ResponseBody
     public BaseResult login(String username, String password, String code, Boolean rememberMe) {
+        //*******方便登陆调试********//
+        username="xiong";
+        password="1234";
+        rememberMe=true;
+
         if (!StringUtils.isNotBlank(code)) {
             return BaseResult.buildFail("验证码不能为空！");
         }
         Session session = getSubject().getSession();
         String sessionCode = (String) session.getAttribute(CODE_KEY);
         if (!code.equalsIgnoreCase(sessionCode)) {
-            return BaseResult.buildFail("验证码错误！");
+            //return BaseResult.buildFail("验证码错误！");
         }
         // 密码 MD5 加密
         password = MD5Utils.encrypt(username.toLowerCase(), password);

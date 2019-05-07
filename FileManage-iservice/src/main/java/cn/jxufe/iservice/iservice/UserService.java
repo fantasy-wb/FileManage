@@ -20,7 +20,7 @@ public interface UserService extends IService<User> {
     @Cacheable(key = "#p0.toString() + (#p1 != null ? #p1.toString() : '')")
     List<User> findUserWithDept(User user, QueryRequest request);
 
-    @CacheEvict(key = "#p0", allEntries = true)
+    @CacheEvict(key = "#", allEntries = true)
     void registUser(User user);
 
     void updateTheme(String theme, String userName);
