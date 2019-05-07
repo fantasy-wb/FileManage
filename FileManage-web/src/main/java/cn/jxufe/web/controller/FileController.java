@@ -1,6 +1,7 @@
 package cn.jxufe.web.controller;
 
 import cn.jxufe.beans.common.QueryRequest;
+import cn.jxufe.beans.model.File;
 import cn.jxufe.beans.model.User;
 import cn.jxufe.beans.result.BaseResult;
 import cn.jxufe.iservice.iservice.FileService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class FileController extends BaseController{
@@ -40,7 +42,13 @@ public class FileController extends BaseController{
         return BaseResult.buildFail("新建文件夹失败！");
     }
 
-    //这样分页不会有问题？
+    @RequestMapping("file/all")
+    @ResponseBody
+    public BaseResult selectAll(){
+         List<File> files = fileService.selectAll();
+         return BaseResult.buildSuccess(files);
+    }
+
     @ResponseBody
     @RequestMapping("file/test")
     public BaseResult fileTest(QueryRequest request,String parentUrl,User user, HttpServletRequest httpServletRequest){

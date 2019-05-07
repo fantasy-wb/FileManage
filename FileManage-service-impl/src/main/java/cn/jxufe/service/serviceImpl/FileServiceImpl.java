@@ -2,22 +2,34 @@ package cn.jxufe.service.serviceImpl;
 
 //import cn.jxufe.beans.model.File;
 import cn.jxufe.beans.model.File;
+import cn.jxufe.dao.mysql.FileMapper;
 import cn.jxufe.iservice.iservice.FileService;
-import tk.mybatis.mapper.common.Mapper;
+import com.alibaba.dubbo.config.annotation.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-//我觉得这边extend
-public class FileServiceImpl  implements FileService {
+
+@Service
+public class FileServiceImpl extends BaseService<File> implements FileService {
+
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    FileMapper fileMapper;
+
+    @Autowired
+    FileService fileService;
+
     @Override
-    public void addFile(String fileURL, String parentURL, boolean isDir) {
-        System.out.println("------------------888888888888888888888888888888888888888888999999999999999------------");
+    public List<File> findFileByParent(File file) {
+        return fileMapper.findFileByParent(file);
     }
-
-
 
     @Override
     public List<File> selectAll() {
-        return null;
+        return fileMapper.selectAll();
     }
 
     @Override
@@ -35,42 +47,4 @@ public class FileServiceImpl  implements FileService {
         return 0;
     }
 
-    @Override
-    public int batchDelete(List<String> list, String property, Class<File> clazz) {
-        return 0;
-    }
-
-    @Override
-    public int updateAll(File entity) {
-        return 0;
-    }
-
-    @Override
-    public int updateNotNull(File entity) {
-        return 0;
-    }
-
-    @Override
-    public List<File> selectByExample(Object example) {
-        return null;
-    }
-//    @Override
-//    public void delFileByFileId(Integer fileId) {
-//
-//    }
-//
-//    @Override
-//    public void updateFile(Integer fileID, String fileName, String fileURL, boolean isDir) {
-//
-//    }
-//
-//    @Override
-//    public List<File> findFilesByParentURL(String parentURL) {
-//        return null;
-//    }
-//
-//    @Override
-//    public List<File> findFilesByFileName(String fileName) {
-//        return null;
-//    }
 }
