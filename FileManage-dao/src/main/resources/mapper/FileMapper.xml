@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.jxufe.dao.mysql.FileMapper">
+  <resultMap id="BaseResultMap" type="cn.jxufe.beans.model.File">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="FILE_ID" jdbcType="INTEGER" property="fileId" />
+    <result column="FILE_NAME" jdbcType="VARCHAR" property="fileName" />
+    <result column="FILE_TYPE" jdbcType="VARCHAR" property="fileType" />
+    <result column="FILE_SIZE" jdbcType="DOUBLE" property="fileSize" />
+    <result column="FILE_URL" jdbcType="VARCHAR" property="fileUrl" />
+    <result column="IS_MARK" jdbcType="BIT" property="isMark" />
+    <result column="IS_ACTIVE" jdbcType="BIT" property="isActive" />
+    <result column="PARENT_URL" jdbcType="VARCHAR" property="parentUrl" />
+    <result column="DEPT_ID" jdbcType="INTEGER" property="deptId" />
+    <result column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <result column="CREATE_USER_ID" jdbcType="INTEGER" property="createUserId" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="MODIFY_USER_ID" jdbcType="INTEGER" property="modifyUserId" />
+    <result column="MODIFY_DATE" jdbcType="TIMESTAMP" property="modifyDate" />
+  </resultMap>
+
+  <select id="findFileByParent" parameterType="cn.jxufe.beans.model.File" resultType="cn.jxufe.beans.model.File">
+    select * from t_file
+    where 1=1
+    <choose>
+      <when test="userId != null">
+        --个人文件
+        and userId = #{userId}
+      </when>
+      <otherwise>
+        --部门文件
+        and deptId = #{deptId}
+      </otherwise>
+    </choose>
+    <if test="parentUrl != null">
+      --非顶级目录
+      and parentUrl = #{parentUrl}
+    </if>
+    and isActive = true
+    --order by isMark
+  </select>
+
+
+</mapper>
