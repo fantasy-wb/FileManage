@@ -8,7 +8,7 @@
                     <div class="dropdown actions__item" shiro:hasAnyPermissions="file:add,file:delete,file:update">
                         <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="javascript:void(0)" class="dropdown-item" data-toggle="modal" data-target="#file-add" shiro:hasPermission="file:add">新增文件</a>
+                            <a href="javascript:void(0)" class="dropdown-item" onclick="addFile()" shiro:hasPermission="file:add">新增文件</a>
                             <a href="javascript:void(0)" class="dropdown-item" onclick="updateFile()" shiro:hasPermission="file:update">修改文件</a>
                             <a href="javascript:void(0)" class="dropdown-item" onclick="deleteFiles()" shiro:hasPermission="file:delete">删除文件</a>
                         </div>
@@ -27,8 +27,8 @@
                             </div>
                         </div>
                     </form>
-                </div>
-                <table id="fileTable" data-mobile-responsive="true" class="mb-bootstrap-table text-nowrap"></table>
+                </div><table id="fileTable" data-mobile-responsive="true" class="mb-bootstrap-table text-nowrap "></table>
+
             </div>
         </div>
     </div>

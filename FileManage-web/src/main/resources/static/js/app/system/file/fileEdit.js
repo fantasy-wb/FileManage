@@ -46,3 +46,7 @@ function updateFile() {
         }
     });
 }
+
+function addFile() {
+    
+}

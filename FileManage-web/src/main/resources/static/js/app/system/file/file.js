@@ -1,8 +1,12 @@
 $(function () {
     var $fileTableForm = $(".file-table-form");
     var settings = {
-        url: ctx + "file/list",
+        url: ctx + "file/test",
         pageSize: 10,
+        striped: false,  //是否显示行间隔色
+        //borderLeft: 0,
+        //showColumns: true,    //是否显示所有的列
+
         queryParams: function (params) {
             return {
                 pageSize: params.limit,
@@ -11,13 +15,21 @@ $(function () {
             };
         },
         columns: [{
-            checkbox: true
+            checkbox: true,
+            vAlign: 'middle'
         },{
             field: 'fileId',
             visible: false
         }, {
+            field: 'fileType',
+            width: '2%',
+            formatter: function (value, row, index) {
+                return '<img class="file_type" src="/FileManage/img/fileIcon/fileicon_'+value+'.png" width="20" height="20">';
+            }
+        }, {
             field: 'fileName',
             title: '文件名'
+
         }, {
             field: 'fileSize',
             title: '大小'

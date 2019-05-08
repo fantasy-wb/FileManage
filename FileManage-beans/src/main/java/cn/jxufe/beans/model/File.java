@@ -1,10 +1,13 @@
 package cn.jxufe.beans.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "t_file")
-public class File {
+public class File implements Serializable {
+
+    private static final long serialVersionUID = 5524099171346214187L;
     /**
      * 文件唯一标志符ID
      */

@@ -26,20 +26,19 @@
     where 1=1
     <choose>
       <when test="userId != null">
-        --个人文件
-        and userId = #{userId}
+        <!--个人文件-->
+        and user_id = #{userId}
       </when>
       <otherwise>
-        --部门文件
-        and deptId = #{deptId}
+        <!--部门文件-->
+        and dept_id = #{deptId}
       </otherwise>
     </choose>
     <if test="parentUrl != null">
-      --非顶级目录
-      and parentUrl = #{parentUrl}
+      and parent_url = #{parentUrl}
     </if>
-    and isActive = true
-    --order by isMark
+    and is_active = 1
+    <!--order by isMark-->
   </select>
 
 

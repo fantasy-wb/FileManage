@@ -7,8 +7,8 @@ import cn.jxufe.beans.result.BaseResult;
 import cn.jxufe.iservice.iservice.FileService;
 import com.alibaba.dubbo.config.annotation.Reference;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,25 +31,30 @@ public class FileController extends BaseController{
         return "system/file/file";
     }
 
-    @RequestMapping(value = "file/addDir")
-    @RequiresPermissions("file:addDir")
-    public BaseResult addDirectory(Integer targetFile, String newFile, HttpServletRequest request){
-        return BaseResult.buildFail("新建文件夹失败！");
+    @RequestMapping(value = "file/addFile")
+    @RequiresPermissions("file:addFile")
+    @Transactional
+    public BaseResult addDirectory(QueryRequest request, File file){
+        try{
+            this.fileService.save(file);
+            return BaseResult.buildFail("新建文件夹成功！");
+        }
+        catch (Exception e){
+            return BaseResult.buildFail("新建文件夹失败！");
+        }
+
     }
 
-    @RequestMapping("file/list")
     @ResponseBody
+    @RequestMapping("file/selectAll")
     public Map<String, Object> selectAll(QueryRequest request, File file){
-        file.setUserId(167);
-        List<File> files = this.fileService.findFileByParent(file);
         return super.selectByPageNumSize(request, () -> this.fileService.selectAll());
     }
 
     @ResponseBody
     @RequestMapping("file/test")
-    public BaseResult fileTest(QueryRequest request,String parentUrl,User user, HttpServletRequest httpServletRequest){
-
-        return BaseResult.buildFail("新建文件夹失败！");
+    public Map<String, Object> fileTest(QueryRequest request, File file){
+        return super.selectByPageNumSize(request, () -> this.fileService.selectAll());
     }
 
 }

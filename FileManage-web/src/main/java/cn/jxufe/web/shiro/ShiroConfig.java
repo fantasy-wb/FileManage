@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * Shiro 配置类
  *
- * @author MrBird
+ * @author
  */
 @Configuration
 public class ShiroConfig {
@@ -120,7 +120,7 @@ public class ShiroConfig {
 
     @Bean
     public ShiroRealm shiroRealm() {
-        // 配置 Realm，需自己实现，见 cc.mrbird.common.shiro.ShiroRealm
+        // 配置 Realm，需自己实现
         return new ShiroRealm();
     }
 

@@ -13501,6 +13501,9 @@ span.flatpickr-weekday {
 .modal-dialog .input-group-addon {
 	border: none;
 }
+#fileTable {
+    border: none;
+}
 .row {
 	margin-top: 15px;
     margin-bottom: 15px;
