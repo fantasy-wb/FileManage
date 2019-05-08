@@ -5,7 +5,7 @@ tmp
 .tmp
 .bak
 .swp
-*.iml
+#*.iml
 ~.nib
 local.properties
 .settings
