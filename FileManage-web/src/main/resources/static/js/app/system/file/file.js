@@ -1,7 +1,7 @@
 $(function () {
     var $fileTableForm = $(".file-table-form");
     var settings = {
-        url: ctx + "file/test",
+        url: ctx + "file/selectAll",
         pageSize: 10,
         striped: false,  //是否显示行间隔色
         //borderLeft: 0,
@@ -27,9 +27,10 @@ $(function () {
                 return '<img class="file_type" src="/FileManage/img/fileIcon/fileicon_'+value+'.png" width="20" height="20">';
             }
         }, {
-            field: 'fileName',
-            title: '文件名'
 
+            field: 'fileName',
+            title: '文件名',
+            width: '50%',
         }, {
             field: 'fileSize',
             title: '大小'

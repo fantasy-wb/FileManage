@@ -117,7 +117,7 @@ var $MB = (function () {
     function _closeAndRestModal(modalId) {
         var $modal = $("#" + modalId);
         $modal.find("button.btn-hide").attr("data-dismiss", "modal").trigger('click');
-        $modal.find("form")[0].reset();
+        $modal.find(" ")[0].reset();
     }
 
     // 获取主题对应的16进制颜色

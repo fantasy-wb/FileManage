@@ -21,7 +21,7 @@ public class UploadController {
 
     @GetMapping("/")
     public String index() {
-        return "upload/upload";
+        return "system/upload/file";
     }
 
     @PostMapping("/upload")
