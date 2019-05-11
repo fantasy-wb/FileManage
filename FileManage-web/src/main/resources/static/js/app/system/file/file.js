@@ -1,11 +1,14 @@
+var parentUrl;//egUrl:  1/home/
+
+
+
 $(function () {
+    parentUrl = "home";
     var $fileTableForm = $(".file-table-form");
     var settings = {
         url: ctx + "file/selectAll",
         pageSize: 10,
-        striped: false,  //是否显示行间隔色
-        //borderLeft: 0,
-        //showColumns: true,    //是否显示所有的列
+        striped: false,
 
         queryParams: function (params) {
             return {
@@ -16,7 +19,6 @@ $(function () {
         },
         columns: [{
             checkbox: true,
-            vAlign: 'middle'
         },{
             field: 'fileId',
             visible: false
@@ -30,13 +32,15 @@ $(function () {
 
             field: 'fileName',
             title: '文件名',
-            width: '50%',
+            width: '53%',
         }, {
             field: 'fileSize',
-            title: '大小'
+            title: '大小',
+            width: '20%'
         }, {
             field: 'modifyDate',
-            title: '修改日期'
+            title: '最近修改日期',
+            width: '25%'
         },{
             field: 'parentUrl',
             visible: false
@@ -57,15 +61,18 @@ $(function () {
 
     };
     $MB.initTable('fileTable', settings);
+    resetFileNav("fileNavigation",parentUrl);
 });
 
 function search() {
     $MB.refreshTable('fileTable');
 }
 
+
+//双击表单事件
 $("#fileTable").on("dbl-click-row.bs.table", function (e, row, $element) {
 
-    if(row.fileType === 'directory') {
+    if(row.fileType === 'dir') {
         $.ajax({
             url: ctx + "file/list",
             data: {
@@ -77,6 +84,8 @@ $("#fileTable").on("dbl-click-row.bs.table", function (e, row, $element) {
             async: true, //默认异步
             success: function (data) {
                 $("#fileTable").bootstrapTable('load', data);
+                parentUrl = row.parentUrl + "/" + row.filename;
+                resetFileNav("fileNavigation",parentUrl);
             }
         });
     }else {
@@ -86,37 +95,6 @@ $("#fileTable").on("dbl-click-row.bs.table", function (e, row, $element) {
 
 
     }
-    // var settings = {
-    //     //url: ctx + "file/list",
-    //     url: ctx + "file/test",
-    //     pageSize: 10,
-    //     queryParams: function (params,row) {
-    //         alert(row.filename);
-    //         return {
-    //             pageSize: params.limit,
-    //             pageNum: params.offset / params.limit + 1,
-    //             parentUrl: row.filename.val(),
-    //             filename: row.filename,
-    //             ssex: $fileTableForm.find("select[name='ssex']").val(),
-    //             status: $fileTableForm.find("select[name='status']").val()
-    //         };
-    //     },
-    //     columns: [{
-    //         checkbox: true
-    //     },{
-    //         field: 'fileId',
-    //         visible: false
-    //     }, {
-    //         field: 'filename',
-    //         title: '用户名'
-    //     }, {
-    //         field: 'crateTime',
-    //         title: '创建时间'
-    //     }
-    //     ]
-    //
-    // };
-    // $MB.reloadTable('fileTable', settings);
 })
 
 function refresh() {
@@ -124,12 +102,24 @@ function refresh() {
     $MB.refreshTable('fileTable');
 }
 
+function returnParentUrl() {
+    loadTargetData(getParentUrl(parentUrl));
+}
+
+function loadTargetData(parentUrl) {//向后端发送数据请求
+
+
+
+
+}
+
+
 function deleteFiles() {
     var selected = $("#fileTable").bootstrapTable('getSelections');
     var selected_length = selected.length;
     var contain = false;
     if (!selected_length) {
-        $MB.n_warning('请勾选需要删除的用户！');
+        $MB.n_warning('请勾选需要删除文件或文件夹！');
         return;
     }
     var ids = "";
@@ -144,7 +134,7 @@ function deleteFiles() {
     }
 
     $MB.confirm({
-        text: "确定删除选中用户？",
+        text: "确定删除选中文件？",
         confirmButtonText: "确定删除"
     }, function () {
         $.post(ctx + 'file/delete', {"ids": ids}, function (r) {
@@ -156,6 +146,32 @@ function deleteFiles() {
             }
         });
     });
+}
+
+//在ID为navId的标签中构建文件路径面包屑
+function resetFileNav(navId,currentUrl){
+    var navStr = "<li class=" + '"returnParent"' + " onclick=" + '"returnParentUrl()"' + "><a href='" + "#" + "'>返回上一级</a></li>";
+    if((currentUrl != "") && (currentUrl != null)) {//处理路径动态生成面包屑   eg：home/dir1/dir2
+        var dirList = currentUrl.split('/');
+        for(var i = 0; i < dirList.length - 1;i++) {
+            var parentUrl = "";
+            for(var m = 0; m < i - 1; m++){
+                parentUrl += dirList[i] + "/";
+            }
+            parentUrl += dirList[i];
+            navStr += "<li><a href=\"#\" onclick=\"resetFileTable("+parentUrl+")\">"+dirList[i]+"</a></li>";
+        }
+        navStr += "<li class=\"active\">" + dirList[dirList.length-1] + "</li>";
+    }
+    document.getElementById(navId).innerHTML = navStr;
+}
+
+
+function getParentUrl(currentUrl) {
+    if(currentUrl.isNullOrUndefined||(!currentUrl.contains('/'))){
+        return currentUrl;
+    }
+    return currentUrl.substring(0,currentUrl.lastIndexOf("/"));
 }
 
 function exportfileExcel() {

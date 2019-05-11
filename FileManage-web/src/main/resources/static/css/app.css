@@ -4152,6 +4152,7 @@ tbody.collapse.show {
   padding-right: 0.5rem;
   padding-left: 0.5rem;
   color: #636c72;
+  /*content: "/";*/
   content: "";
 }
 .breadcrumb-item + .breadcrumb-item:hover::before {
@@ -13669,4 +13670,33 @@ select {
   top: 50%;
   transform: translateY(-50%);
 }
+
+
+.breadcrumbt {
+  padding: 8px 2px;
+  /*margin-bottom: 20px;*/
+  list-style: none;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+
+.breadcrumbt > li {
+  display: inline-block;
+}
+/*并且li项才起作用*/
+.breadcrumbt > li + li:after {
+  padding: 8px 0px 8px 9px;
+  color: #ccc;
+  content: "/\00a0";
+}
+/*设置当前项的颜色*/
+.breadcrumbt > .active {
+  color: #777;
+}
+.breadcrumbt > .returnParent:after{
+  padding: 8px 5px;
+  color: #ccc;
+  content: "|";
+}
+
 /*# sourceMappingURL=app.css.map */

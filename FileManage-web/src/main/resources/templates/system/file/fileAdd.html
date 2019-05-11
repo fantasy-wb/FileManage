@@ -19,8 +19,8 @@
                         data: new FormData(),
                         beforeUpload: function(file, data, args) {
                             /* dataFormat为formData时配置发送数据的方式 */
-                            data.append('token', '387126b0-7b3e-4a2a-86ad-ae5c5edd0ae6TT');
-                            data.append('otherKey', 'otherValue');
+                            data.append('parentUrl', '387126b0-7b3e-4a2a-86ad-ae5c5edd0ae6TT');
+                            data.append('fileUrl', 'otherValue');
 
                             /* dataFormat为base64时配置发送数据的方式 */
                             // data.base = file.base;

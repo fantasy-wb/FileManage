@@ -24,13 +24,13 @@
           // testKey: 'testValue'
         }, /* 上传的请求头部，视需要配置 */
         maxCount: 3, /* 最大上传文件数 */
-        maxSize: 3, /* 最大上传文件体积，单位M */
+        maxSize: 100, /* 最大上传文件体积，单位M */
         multiple: false, /* 是否开启多选上传 */
         name: 'file', /* 上传的文件字段名 */
         previewWidth: 70, /* 压缩预览图的宽度，样式中高度等于宽度 */
         processData: false, /* 同$.ajax参数，这里默认为false */
         successKey: 'code', /* 标识上传成功的key */
-        successValue: 200, /* 标识上传成功对应的value */
+        successValue: 0, /* 标识上传成功对应的value */
         showAlert: true, /* 是否开启alert提示 */
         timeout: 0, /* ajax请求超时时间，默认值为0，表示永不超时*/
         withCredentials: true, /* 是否支持发送 cookie 凭证信息 */

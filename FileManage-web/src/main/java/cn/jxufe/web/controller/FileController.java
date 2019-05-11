@@ -27,6 +27,8 @@ import java.util.Set;
 @Controller
 public class FileController extends BaseController{
 
+    private static String headUrl;
+
     @Reference
     private FileService fileService;
 
@@ -41,16 +43,27 @@ public class FileController extends BaseController{
         return "system/file/file";
     }
 
-    @RequestMapping(value = "file/addFile")
-    @RequiresPermissions("file:addFile")
+    @RequestMapping("deptfile")
+    //@RequiresPermissions("file:personal")
+    public String index2(Model model) {
+        User user = super.getCurrentUser();
+        model.addAttribute("user", user);
+        return "system/file/file";
+    }
+
+
+    @ResponseBody
     @Transactional
-    public BaseResult addFile(@RequestParam("file") MultipartFile file, MultipartParameterNames parameterNames){
+    @RequestMapping(value = "file/delFileODir")
+    @RequiresPermissions("file:delete")
+    public BaseResult deleteFileOrDir(List<Integer> ids){
         try{
 
-            String fileUrl = dfsClient.uploadFile(file);
 
-            //this.fileService.save(file);
-            return BaseResult.buildFail("新建文件夹成功！");
+
+
+            this.fileService.delete(1);
+            return BaseResult.buildSuccess("新建文件夹成功！");
         }
         catch (Exception e){
             return BaseResult.buildFail("新建文件夹失败！");
@@ -59,14 +72,50 @@ public class FileController extends BaseController{
     }
 
     @ResponseBody
+    @Transactional
+    @RequestMapping(value = "file/list")
+    @RequiresPermissions("file:addFile")
+    public BaseResult getFileList( MultipartFile multipartFile, File file){
+
+            return BaseResult.buildFail("新建文件夹失败！");
+    }
+
+
+
+    @ResponseBody
+    @Transactional
+    @RequestMapping(value = "file/addFile")
+    @RequiresPermissions("file:addFile")
+    public BaseResult uploadFile(@RequestParam("file") MultipartFile multipartFile, File file){
+        try{
+            if(file.getParentUrl().isEmpty()||file.getFileType().isEmpty()){
+                return BaseResult.buildFail("缺少必要的信息，请联系开发人员！");
+            }
+            String fileUrl = dfsClient.uploadFile(multipartFile);
+
+
+
+            this.fileService.save(file);
+            return BaseResult.buildSuccess("新建文件夹成功！");
+        }
+        catch (Exception e){
+            return BaseResult.buildFail("新建文件夹失败！");
+        }
+
+    }
+
+
+    @ResponseBody
     @RequestMapping("file/selectAll")
+    @Transactional
     public Map<String, Object> selectAll(QueryRequest request, File file){
         return super.selectByPageNumSize(request, () -> this.fileService.selectAll());
     }
-//@RequestParam("files") MultipartFile file,
+
     @ResponseBody
     @RequestMapping("file/test")
-    public Map<String, Object> fileTest(QueryRequest request,  HttpServletRequest httpServletRequest){
+    public Map<String, Object> fileTest(QueryRequest request,  @RequestParam("file") MultipartFile multipartFile, File file){
+
         return super.selectByPageNumSize(request, () -> this.fileService.selectAll());
     }
 
