@@ -1,10 +1,9 @@
-var parentUrl = currentNav.replace(/&nbsp;&nbsp;/,"") + "/home";//egUrl:  1/home/
-
 
 
 $(function () {
 
     var $fileTableForm = $(".file-table-form");
+    indexUrl = currentNav.replace(/&nbsp;&nbsp;/,"") + "/home";//egUrl:  1/home/
     var settings = {
         url: ctx + "file/selectAll",
         pageSize: 10,
@@ -15,7 +14,7 @@ $(function () {
                 pageSize: params.limit,
                 pageNum: params.offset / params.limit + 1,
                 fileName: $fileTableForm.find("input[name='fileName']").val().trim(),
-                parentUrl: parentUrl.replace("&nbsp;&nbsp;",""),
+                parentUrl: indexUrl.replace("&nbsp;&nbsp;",""),
             };
         },
         columns: [{
@@ -65,7 +64,7 @@ $(function () {
 
     };
     $MB.initTable('fileTable', settings);
-    resetFileNav("fileNavigation",parentUrl);
+    resetFileNav("fileNavigation",indexUrl);
 });
 
 function search() {
@@ -86,8 +85,8 @@ $("#fileTable").on("dbl-click-row.bs.table", function (e, row, $element) {
             async: true, //默认异步
             success: function (data) {
                 $("#fileTable").bootstrapTable('load', data);
-                parentUrl = row.parentUrl + "/" + row.filename;
-                resetFileNav("fileNavigation",parentUrl);
+                indexUrl = row.parentUrl + "/" + row.filename;
+                resetFileNav("fileNavigation",indexUrl);
             }
         });
     }else {

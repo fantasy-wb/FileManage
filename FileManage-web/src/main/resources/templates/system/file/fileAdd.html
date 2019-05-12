@@ -19,7 +19,7 @@
                         data: new FormData(),
                         beforeUpload: function(file, data, args) {
                             /* dataFormat为formData时配置发送数据的方式 */
-                            data.append('parentUrl', parentUrl);
+                            data.append('parentUrl', indexUrl);
 
                             /* dataFormat为base64时配置发送数据的方式 */
                             // data.base = file.base;

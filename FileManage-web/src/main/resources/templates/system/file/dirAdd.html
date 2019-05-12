@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div class="modal fade" id="dir-add" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title pull-left" id="file-add-modal-title">新建文件夹</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-11">
+                        <div class="input-group">
+                                <span class="input-group-addon">
+					               	 文件名：
+					            </span>
+                            <div class="form-group">
+                                <input type="text" name="fileName" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-</body>
-</html>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-save" id="dir-add-button" name="save">保存</button>
+                <button type="button" class="btn btn-secondary btn-close">取消</button>
+                <button class="btn-hide"></button>
+            </div>
+        </div>
+    </div>
+</div>
+<script data-th-src="@{js/app/system/file/fileAdd.js}"></script>

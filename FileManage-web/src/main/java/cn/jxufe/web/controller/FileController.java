@@ -85,7 +85,7 @@ public class FileController extends BaseController{
     @ResponseBody
     @Transactional
     @RequestMapping(value = "file/addFile")
-    @RequiresPermissions("file:addFile")
+    @RequiresPermissions("file:add")
     public BaseResult uploadFile(@RequestParam("file") MultipartFile multipartFile, File file){
         try{
             if(file.getParentUrl().isEmpty()||file.getFileType().isEmpty()){

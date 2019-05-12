@@ -1,7 +1,9 @@
+//全局变量需定义在Index中
 var $breadcrumb = $(".breadcrumb");
 var $main_content = $(".main-content");
 var $navigation = $("#navigation");
 var currentNav = "";
+var indexUrl = "";
 
 var redisMemoryInfoInterval;
 var rediskeysSizeInterval;
@@ -146,6 +148,7 @@ function loadMain(obj) {
         breadcrumnHtml += '<li class="breadcrumb-item">' + text_arr[i] + '</li>';
     }
     breadcrumnHtml += '<li class="breadcrumb-item">' + target_text + '</li>';
+    indexUrl = "";
     currentNav = target_text;
     $breadcrumb.html("").append(breadcrumnHtml);
 
