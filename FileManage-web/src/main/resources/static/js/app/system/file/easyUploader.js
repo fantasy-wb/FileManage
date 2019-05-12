@@ -495,6 +495,7 @@
 
                 }
             }
+            alert("上传完成！");
         }
     };
     window.easyUploader = easyUploader;

@@ -13699,4 +13699,7 @@ select {
   content: "|";
 }
 
+.breadcrumbt > .returnParent:before{
+  padding: 8px 5px;
+}
 /*# sourceMappingURL=app.css.map */

@@ -1,6 +1,7 @@
 var $breadcrumb = $(".breadcrumb");
 var $main_content = $(".main-content");
 var $navigation = $("#navigation");
+var currentNav = "";
 
 var redisMemoryInfoInterval;
 var rediskeysSizeInterval;
@@ -145,6 +146,7 @@ function loadMain(obj) {
         breadcrumnHtml += '<li class="breadcrumb-item">' + text_arr[i] + '</li>';
     }
     breadcrumnHtml += '<li class="breadcrumb-item">' + target_text + '</li>';
+    currentNav = target_text;
     $breadcrumb.html("").append(breadcrumnHtml);
 
     // 加载内容

@@ -116,7 +116,7 @@ public class FileController extends BaseController{
     @RequestMapping("file/test")
     public Map<String, Object> fileTest(QueryRequest request,  @RequestParam("file") MultipartFile multipartFile, File file){
 
-        return super.selectByPageNumSize(request, () -> this.fileService.selectAll());
+        return BaseResult.buildSuccess("新建文件夹成功！");//super.selectByPageNumSize(request, () -> this.fileService.selectAll());
     }
 
 }

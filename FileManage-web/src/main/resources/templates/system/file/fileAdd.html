@@ -10,8 +10,8 @@
                 <script>
                     var uploader = easyUploader({
                         id: "uploader",
-                        accept: '.jpg,.png,.doc,.docx',
-                        action: 'file/test ',
+                        accept: '.jpg,.png,.doc,.docx,.bt,.code,.default,.excle,.mp3,.mp4,.pdf,.ppt,.txt,.word,.zip,.rar',
+                        action: 'file/addFile ',
                         dataFormat: 'formData',
                         maxCount: 10,
                         maxSize: 3,
@@ -19,8 +19,7 @@
                         data: new FormData(),
                         beforeUpload: function(file, data, args) {
                             /* dataFormat为formData时配置发送数据的方式 */
-                            data.append('parentUrl', '387126b0-7b3e-4a2a-86ad-ae5c5edd0ae6TT');
-                            data.append('fileUrl', 'otherValue');
+                            data.append('parentUrl', parentUrl);
 
                             /* dataFormat为base64时配置发送数据的方式 */
                             // data.base = file.base;

@@ -1,9 +1,9 @@
-var parentUrl;//egUrl:  1/home/
+var parentUrl = currentNav.replace(/&nbsp;&nbsp;/,"") + "/home";//egUrl:  1/home/
 
 
 
 $(function () {
-    parentUrl = "home";
+
     var $fileTableForm = $(".file-table-form");
     var settings = {
         url: ctx + "file/selectAll",
@@ -15,6 +15,7 @@ $(function () {
                 pageSize: params.limit,
                 pageNum: params.offset / params.limit + 1,
                 fileName: $fileTableForm.find("input[name='fileName']").val().trim(),
+                parentUrl: parentUrl.replace("&nbsp;&nbsp;",""),
             };
         },
         columns: [{
@@ -34,9 +35,12 @@ $(function () {
             title: '文件名',
             width: '53%',
         }, {
+
+        }, {
             field: 'fileSize',
             title: '大小',
             width: '20%'
+
         }, {
             field: 'modifyDate',
             title: '最近修改日期',
@@ -72,12 +76,10 @@ function search() {
 //双击表单事件
 $("#fileTable").on("dbl-click-row.bs.table", function (e, row, $element) {
 
-    if(row.fileType === 'dir') {
+    if(row.fileType === 'dir') {//双击文件夹
         $.ajax({
             url: ctx + "file/list",
             data: {
-                deptId: row.deptId,
-                userId: row.userId,
                 parentUrl: row.parentUrl + "/" + row.filename
             },
             dataType: "json",
@@ -90,10 +92,19 @@ $("#fileTable").on("dbl-click-row.bs.table", function (e, row, $element) {
         });
     }else {
 
-
-
-
-
+        $.ajax({
+            url: ctx + "file/downloadFile",
+            data: {
+                field: row.field
+            },
+            dataType: "json",
+            async: true, //默认异步
+            success: function (data) {
+                $("#fileTable").bootstrapTable('load', data);
+                parentUrl = row.parentUrl + "/" + row.filename;
+                resetFileNav("fileNavigation", parentUrl);
+            }
+        });
     }
 })
 
@@ -106,10 +117,22 @@ function returnParentUrl() {
     loadTargetData(getParentUrl(parentUrl));
 }
 
-function loadTargetData(parentUrl) {//向后端发送数据请求
 
+function loadTargetData(targetUrl) {//向后端发送数据请求
 
-
+    $.ajax({
+        url: ctx + "file/list",
+        data: {
+            parentUrl: row.parentUrl + "/" + row.filename
+        },
+        dataType: "json",
+        async: true, //默认异步
+        success: function (data) {
+            $("#fileTable").bootstrapTable('load', data);
+            parentUrl = targetUrl;
+            resetFileNav("fileNavigation",targetUrl);
+        }
+    });
 
 }
 
@@ -150,19 +173,22 @@ function deleteFiles() {
 
 //在ID为navId的标签中构建文件路径面包屑
 function resetFileNav(navId,currentUrl){
-    var navStr = "<li class=" + '"returnParent"' + " onclick=" + '"returnParentUrl()"' + "><a href='" + "#" + "'>返回上一级</a></li>";
+
+    var navStr = "<li class=" + '"returnParent"' + " onclick=" + '"returnParentUrl()"' + "><a href='" + "#" + "'>&nbsp;&nbsp;返回上一级</a></li>";
+
     if((currentUrl != "") && (currentUrl != null)) {//处理路径动态生成面包屑   eg：home/dir1/dir2
         var dirList = currentUrl.split('/');
-        for(var i = 0; i < dirList.length - 1;i++) {
+        for(var i = 1; i < dirList.length - 1;i++) {
             var parentUrl = "";
-            for(var m = 0; m < i - 1; m++){
+            for(var m = 1; m < i - 1; m++){
                 parentUrl += dirList[i] + "/";
             }
             parentUrl += dirList[i];
-            navStr += "<li><a href=\"#\" onclick=\"resetFileTable("+parentUrl+")\">"+dirList[i]+"</a></li>";
+            navStr += "<li><a href=\"#\" onclick=\"loadTargetData("+parentUrl+")\">"+dirList[i]+"</a></li>";
         }
         navStr += "<li class=\"active\">" + dirList[dirList.length-1] + "</li>";
     }
+
     document.getElementById(navId).innerHTML = navStr;
 }
 
@@ -173,6 +199,8 @@ function getParentUrl(currentUrl) {
     }
     return currentUrl.substring(0,currentUrl.lastIndexOf("/"));
 }
+
+
 
 function exportfileExcel() {
     $.post(ctx + "file/excel", $(".file-table-form").serialize(), function (r) {
