@@ -8,6 +8,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,24 +28,28 @@ public class FileServiceImpl extends BaseService<File> implements FileService {
         return fileMapper.findFileByParent(file);
     }
 
+
+    @Override
+
+    public int updateFileStatus(String ids,boolean status) {
+        try {
+            String[] idArray = ids.split(",");
+            for (String id : idArray) {
+                File file = fileMapper.selectByPrimaryKey(Integer.parseInt(id));
+                file.setIsActive(status);
+                fileMapper.updateByPrimaryKey(file);
+            }
+            return 0;
+        }catch (Exception e){
+            return 1;
+        }
+    }
+
     @Override
     public List<File> selectAll() {
         return fileMapper.selectAll();
     }
 
-    @Override
-    public File selectByKey(Object key) {
-        return null;
-    }
 
-    @Override
-    public int save(File entity) {
-        return 0;
-    }
-
-    @Override
-    public int delete(Object key) {
-        return 0;
-    }
 
 }

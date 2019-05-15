@@ -1,4 +1,3 @@
-//全局变量需定义在Index中
 var $breadcrumb = $(".breadcrumb");
 var $main_content = $(".main-content");
 var $navigation = $("#navigation");
@@ -148,7 +147,7 @@ function loadMain(obj) {
         breadcrumnHtml += '<li class="breadcrumb-item">' + text_arr[i] + '</li>';
     }
     breadcrumnHtml += '<li class="breadcrumb-item">' + target_text + '</li>';
-    indexUrl = "";
+    indexUrl = "";//加载菜单时赋值
     currentNav = target_text;
     $breadcrumb.html("").append(breadcrumnHtml);
 

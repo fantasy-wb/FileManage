@@ -19,7 +19,7 @@ import java.io.InputStream;
 /**
  * 功能描述: 文件处理类
  *
- * @date 2018/10/12
+ * @date 2019/4/12
  */
 @Component
 public class FastDFSClientWrapper {
@@ -58,7 +58,7 @@ public class FastDFSClientWrapper {
      *
      * @param fileUrl
      * @return void
-     * @date 2018/10/12
+     * @date 2019/4/2
      */
     public void deleteFile(String fileUrl) {
 
@@ -80,7 +80,7 @@ public class FastDFSClientWrapper {
      *
      * @param fileUrl
      * @return java.io.InputStream
-     * @date 2018/10/12
+     * @date 2019/3/12
      */
     public byte[] downFile(String fileUrl) {
         try {

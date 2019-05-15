@@ -7,13 +7,13 @@ import javax.persistence.*;
 @Table(name = "t_file")
 public class File implements Serializable {
 
-    private static final long serialVersionUID = 5524099171346214187L;
+    private static final long serialVersionUID = 6302944413933421991L;
     /**
      * 文件唯一标志符ID
      */
     @Id
     @Column(name = "FILE_ID")
-    private Integer fileId;
+    private Long fileId;
 
     /**
      * 文件/文件夹名
@@ -22,7 +22,7 @@ public class File implements Serializable {
     private String fileName;
 
     /**
-     * directory类型:文件夹
+     * dir类型:文件夹
      */
     @Column(name = "FILE_TYPE")
     private String fileType;
@@ -31,7 +31,7 @@ public class File implements Serializable {
      * 文件大小
      */
     @Column(name = "FILE_SIZE")
-    private Double fileSize;
+    private Long fileSize;
 
     /**
      * 文件实际存放路径
@@ -61,19 +61,19 @@ public class File implements Serializable {
      * 所属部门
      */
     @Column(name = "DEPT_ID")
-    private Integer deptId;
+    private Long deptId;
 
     /**
      * null：共享文件
      */
     @Column(name = "USER_ID")
-    private Integer userId;
+    private Long userId;
 
     /**
      * 上传用户
      */
     @Column(name = "CREATE_USER_ID")
-    private Integer createUserId;
+    private Long createUserId;
 
     /**
      * 上传日期
@@ -85,7 +85,7 @@ public class File implements Serializable {
      * 修改人员
      */
     @Column(name = "MODIFY_USER_ID")
-    private Integer modifyUserId;
+    private Long modifyUserId;
 
     /**
      * 修改日期
@@ -98,7 +98,7 @@ public class File implements Serializable {
      *
      * @return FILE_ID - 文件唯一标志符ID
      */
-    public Integer getFileId() {
+    public Long getFileId() {
         return fileId;
     }
 
@@ -107,7 +107,7 @@ public class File implements Serializable {
      *
      * @param fileId 文件唯一标志符ID
      */
-    public void setFileId(Integer fileId) {
+    public void setFileId(Long fileId) {
         this.fileId = fileId;
     }
 
@@ -130,18 +130,18 @@ public class File implements Serializable {
     }
 
     /**
-     * 获取directory类型:文件夹
+     * 获取dir类型:文件夹
      *
-     * @return FILE_TYPE - directory类型:文件夹
+     * @return FILE_TYPE - dir类型:文件夹
      */
     public String getFileType() {
         return fileType;
     }
 
     /**
-     * 设置directory类型:文件夹
+     * 设置dir类型:文件夹
      *
-     * @param fileType directory类型:文件夹
+     * @param fileType dir类型:文件夹
      */
     public void setFileType(String fileType) {
         this.fileType = fileType == null ? null : fileType.trim();
@@ -152,7 +152,7 @@ public class File implements Serializable {
      *
      * @return FILE_SIZE - 文件大小
      */
-    public Double getFileSize() {
+    public Long getFileSize() {
         return fileSize;
     }
 
@@ -161,7 +161,7 @@ public class File implements Serializable {
      *
      * @param fileSize 文件大小
      */
-    public void setFileSize(Double fileSize) {
+    public void setFileSize(Long fileSize) {
         this.fileSize = fileSize;
     }
 
@@ -242,7 +242,7 @@ public class File implements Serializable {
      *
      * @return DEPT_ID - 所属部门
      */
-    public Integer getDeptId() {
+    public Long getDeptId() {
         return deptId;
     }
 
@@ -251,7 +251,7 @@ public class File implements Serializable {
      *
      * @param deptId 所属部门
      */
-    public void setDeptId(Integer deptId) {
+    public void setDeptId(Long deptId) {
         this.deptId = deptId;
     }
 
@@ -260,7 +260,7 @@ public class File implements Serializable {
      *
      * @return USER_ID - null：共享文件
      */
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
@@ -269,7 +269,7 @@ public class File implements Serializable {
      *
      * @param userId null：共享文件
      */
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
@@ -278,7 +278,7 @@ public class File implements Serializable {
      *
      * @return CREATE_USER_ID - 上传用户
      */
-    public Integer getCreateUserId() {
+    public Long getCreateUserId() {
         return createUserId;
     }
 
@@ -287,7 +287,7 @@ public class File implements Serializable {
      *
      * @param createUserId 上传用户
      */
-    public void setCreateUserId(Integer createUserId) {
+    public void setCreateUserId(Long createUserId) {
         this.createUserId = createUserId;
     }
 
@@ -314,7 +314,7 @@ public class File implements Serializable {
      *
      * @return MODIFY_USER_ID - 修改人员
      */
-    public Integer getModifyUserId() {
+    public Long getModifyUserId() {
         return modifyUserId;
     }
 
@@ -323,7 +323,7 @@ public class File implements Serializable {
      *
      * @param modifyUserId 修改人员
      */
-    public void setModifyUserId(Integer modifyUserId) {
+    public void setModifyUserId(Long modifyUserId) {
         this.modifyUserId = modifyUserId;
     }
 
@@ -342,6 +342,26 @@ public class File implements Serializable {
      * @param modifyDate 修改日期
      */
     public void setModifyDate(Date modifyDate) {
+        this.modifyDate = modifyDate;
+    }
+
+    public File() {
+    }
+
+    public File(Long fileId, String fileName, String fileType, Long fileSize, String fileUrl, Boolean isMark, Boolean isActive, String parentUrl, Long deptId, Long userId, Long createUserId, Date createDate, Long modifyUserId, Date modifyDate) {
+        this.fileId = fileId;
+        this.fileName = fileName;
+        this.fileType = fileType;
+        this.fileSize = fileSize;
+        this.fileUrl = fileUrl;
+        this.isMark = isMark;
+        this.isActive = isActive;
+        this.parentUrl = parentUrl;
+        this.deptId = deptId;
+        this.userId = userId;
+        this.createUserId = createUserId;
+        this.createDate = createDate;
+        this.modifyUserId = modifyUserId;
         this.modifyDate = modifyDate;
     }
 }

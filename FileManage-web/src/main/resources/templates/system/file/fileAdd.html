@@ -10,11 +10,11 @@
                 <script>
                     var uploader = easyUploader({
                         id: "uploader",
-                        accept: '.jpg,.png,.doc,.docx,.bt,.code,.default,.excle,.mp3,.mp4,.pdf,.ppt,.txt,.word,.zip,.rar',
+                        accept: '.jpg,.png,.doc,.docx,.bt,.code,.default,.pub,.mp3,.mp4,.pdf,.ppt,.txt,.word,.zip,.rar,.xlsx',
                         action: 'file/addFile ',
                         dataFormat: 'formData',
                         maxCount: 10,
-                        maxSize: 3,
+                        maxSize: 100,
                         multiple: true,
                         data: new FormData(),
                         beforeUpload: function(file, data, args) {

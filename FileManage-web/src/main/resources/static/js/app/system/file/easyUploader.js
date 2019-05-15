@@ -23,7 +23,7 @@
         headers: {
           // testKey: 'testValue'
         }, /* 上传的请求头部，视需要配置 */
-        maxCount: 3, /* 最大上传文件数 */
+        maxCount: 10, /* 最大上传文件数 */
         maxSize: 100, /* 最大上传文件体积，单位M */
         multiple: false, /* 是否开启多选上传 */
         name: 'file', /* 上传的文件字段名 */
@@ -495,7 +495,6 @@
 
                 }
             }
-            alert("上传完成！");
         }
     };
     window.easyUploader = easyUploader;
