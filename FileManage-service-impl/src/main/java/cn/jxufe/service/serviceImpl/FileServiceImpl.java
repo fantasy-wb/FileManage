@@ -15,6 +15,10 @@ import java.util.List;
 @Service
 public class FileServiceImpl extends BaseService<File> implements FileService {
 
+    private static int SUCCESS = 1;
+
+    private static int FAIL = 0;
+
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
@@ -28,9 +32,13 @@ public class FileServiceImpl extends BaseService<File> implements FileService {
         return fileMapper.findFileByParent(file);
     }
 
+    @Override
+    public List<File> findFileHistoryList(File file) {
+        return fileMapper.findFileHistoryList(file);
+    }
+
 
     @Override
-
     public int updateFileStatus(String ids,boolean status) {
         try {
             String[] idArray = ids.split(",");
@@ -39,10 +47,25 @@ public class FileServiceImpl extends BaseService<File> implements FileService {
                 file.setIsActive(status);
                 fileMapper.updateByPrimaryKey(file);
             }
-            return 0;
+            return SUCCESS;
         }catch (Exception e){
-            return 1;
+            return FAIL;
         }
+    }
+
+    @Override
+    public int changeFileVersion(File file) {
+//        try {
+            fileMapper.unableFileStatus(file);
+            return SUCCESS;
+//        }catch (Exception e){
+//            return FAIL;
+//        }
+    }
+
+    @Override
+    public File checkFileExist(File file) {
+        return fileMapper.checkFileExist(file);
     }
 
     @Override

@@ -56,6 +56,7 @@ $(function () {
         ]
 
     };
+
     $MB.initTable('fileTable', settings);
     resetFileNav("fileNavigation", indexUrl);
 });
@@ -68,9 +69,7 @@ function search() {
 $("#fileTable").on("dbl-click-row.bs.table", function (e, row, $element) {
 
     if (row.fileType === 'dir') {//双击文件夹
-
         $.ajax({
-
             url: ctx + "file/list",
             data: {
                 parentUrl: row.parentUrl + "/" + row.fileName
@@ -85,17 +84,19 @@ $("#fileTable").on("dbl-click-row.bs.table", function (e, row, $element) {
         });
     } else {
 
-        var form=$("<form>");
+        var form = $("<form>");
 
         //设置表单状态为不显示
-        form.attr("style","display:none");
+        form.attr("style", "display:none");
 
         //method属性设置请求类型为get
-        form.attr("method","get");
+        form.attr("method", "get");
 
         //action属性设置请求路径,(如有需要,可直接在路径后面跟参数)
         //例如:htpp://127.0.0.1/test?id=123
-        form.attr("action",row.fileUrl);
+        // alert(row.fileUrl + "?fileName=" + row.fileName);
+        // return;
+        form.attr("action", row.fileUrl + "?fileName=" + row.fileName);
 
         //将表单放置在页面(body)中
         $("body").append(form);
@@ -118,8 +119,9 @@ $("#fileTable").on("dbl-click-row.bs.table", function (e, row, $element) {
 
 })
 
+
 function refresh() {
-    $(".file-table-form")[0].reset();
+    //$(".file-table-form")[0].reset();
     $MB.refreshTable('fileTable');
 }
 
@@ -144,7 +146,7 @@ function returnParentUrl() {
 }
 
 
-function loadTargetData(event,$this) {//向后端发送数据请求
+function loadTargetData(event, $this) {//向后端发送数据请求
 
     var targetUrl = $this.getAttribute("title");
 
@@ -193,7 +195,7 @@ function deleteFiles() {
         $.post(ctx + 'file/delete', {"ids": ids}, function (r) {
             if (r.code === 0) {
                 $MB.n_success(r.msg);
-                refresh();
+                $MB.refreshTable('fileTable');
             } else {
                 $MB.n_danger(r.msg);
             }
@@ -210,9 +212,9 @@ function resetFileNav(navId, currentUrl) {
         var dirList = currentUrl.split('/');
         for (var i = 1; i < dirList.length - 1; i++) {
             var targetUrl = currentUrl.substring(0, currentUrl.indexOf(dirList[i]) + dirList[i].length).trim();
-            var reg = new RegExp("/","g")
+            var reg = new RegExp("/", "g")
             //targetUrl = targetUrl.replace(reg,"&#47;");
-            navStr += "<li><a href=\"#\" onclick=\"loadTargetData(event,this)\" title="+targetUrl+">" + dirList[i] + "</a></li>";
+            navStr += "<li><a href=\"#\" onclick=\"loadTargetData(event,this)\" title=" + targetUrl + ">" + dirList[i] + "</a></li>";
         }
         navStr += "<li class=\"active\">" + dirList[dirList.length - 1] + "</li>";
     }

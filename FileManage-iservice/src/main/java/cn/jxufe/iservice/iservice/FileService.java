@@ -9,5 +9,11 @@ public interface FileService extends IService<File>{
 
     List<File> findFileByParent(File file);
 
+    List<File> findFileHistoryList(File file);
+
     int updateFileStatus(String ids,boolean status);
+
+    int changeFileVersion(File file);
+
+    File checkFileExist(File file);
 }

@@ -1,11 +1,14 @@
 
-$("#file-add .btn-close").click(function () {
+$("#file-add .btn-close").unbind('click').click(function () {
+    //alert("1111");
     $MB.closeAndRestModal("file-add");
+    $MB.refreshTable("fileTable");
 });
 
-$("#dir-add .btn-close").click(function () {
+$("#dir-add .btn-close").unbind('click').click(function () {
     $('#dirName').val("");
     $MB.closeAndRestModal("dir-add");
+    $MB.refreshTable("fileTable")
 });
 
 function checkFileOrDirName(fileName) {
@@ -13,9 +16,7 @@ function checkFileOrDirName(fileName) {
     if(fileName.contains('/')){
         return false;
     }
-
     return true;
-
 }
 
 $("#dir-add .btn-save").unbind('click').click(function () {
@@ -39,7 +40,7 @@ $("#dir-add .btn-save").unbind('click').click(function () {
             $('#dirName').val("");
             $MB.closeAndRestModal("dir-add");
             $MB.n_success(r.msg);
-
+            $MB.refreshTable('fileTable');
         } else $MB.n_danger(r.msg);
     });
 

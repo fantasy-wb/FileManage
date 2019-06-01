@@ -28,8 +28,34 @@
       and parent_url = #{parentUrl}
     </if>
     and is_active = 1
-    <!--order by isMark-->
+    order by FIELD(file_type,'dir') desc
   </select>
 
+  <select id="findFileHistoryList" parameterType="cn.jxufe.beans.model.File" resultType="cn.jxufe.beans.model.File">
+    select * from t_file
+    where 1=1
+    <if test="parentUrl != null">
+      and parent_url = #{parentUrl}
+    </if>
+    <if test="fileName != null">
+      and file_name = #{fileName}
+    </if>
+    and is_active = 0
+    order by modify_date desc
+  </select>
+
+  <update id="unableFileStatus" parameterType="cn.jxufe.beans.model.File">
+    update t_file set is_active = 0
+    where parent_url = #{parentUrl}
+    and file_name = #{fileName}
+    and is_active = 1
+  </update>
+
+  <select id="checkFileExist" parameterType="cn.jxufe.beans.model.File" resultType="cn.jxufe.beans.model.File">
+    select * from t_file
+    where parent_url = #{parentUrl}
+    and file_name = #{fileName}
+    and is_active = 1
+  </select>
 
 </mapper>

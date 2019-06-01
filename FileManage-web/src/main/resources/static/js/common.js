@@ -117,8 +117,8 @@ var $MB = (function () {
     function _closeAndRestModal(modalId) {
         var $modal = $("#" + modalId);
         $modal.find("button.btn-hide").attr("data-dismiss", "modal").trigger('click');
-        $("#" + modalId).find("input").val("");//重置所有input输入框
-        //$modal.find(" ")[0].reset();
+        $modal.find("input").val("");//重置所有input输入框
+        //$modal.find("table")[0].reset();
     }
 
     // 获取主题对应的16进制颜色

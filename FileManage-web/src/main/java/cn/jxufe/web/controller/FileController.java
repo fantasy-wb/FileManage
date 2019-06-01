@@ -80,11 +80,31 @@ public class FileController extends BaseController {
         return super.selectByPageNumSize(request, () -> this.fileService.findFileByParent(file));
     }
 
+    @ResponseBody
+    @Transactional
+    @RequestMapping(value = "file/version")
+    public Map<String, Object> fileVersionList(QueryRequest request, File file) {
+        return super.selectByPageNumSize(request, () -> this.fileService.findFileHistoryList(file));
+    }
+
+    @ResponseBody
+    @Transactional
+    @RequestMapping(value = "file/fileActive")
+    public BaseResult fileVersionUpdate(File file) {
+        try {
+            fileService.changeFileVersion(file);
+            fileService.updateFileStatus(file.getFileId().toString(),true);
+            return BaseResult.buildSuccess("操作成功！");
+        } catch (Exception e) {
+            return BaseResult.buildFail("操作失败：" + e);
+        }
+    }
+
 
     @ResponseBody
     @RequestMapping(value = "file/download")
     @RequiresPermissions("file:download")
-    public byte[] downloadFile(String fileUrl){
+    public byte[] downloadFile(String fileUrl) {
         return dfsClient.downFile(fileUrl);
     }
 
@@ -98,9 +118,7 @@ public class FileController extends BaseController {
             if (file.getParentUrl().isEmpty()) {
                 return BaseResult.buildFail("缺少必要的信息，请联系开发人员！");
             }
-
             User user = super.getCurrentUser();
-
             if (file.getParentUrl().startsWith("&nbsp;&nbsp;个人文件")) {
                 file.setParentUrl(file.getParentUrl().replace("&nbsp;&nbsp;个人文件", user.getUserId().toString()));
             } else if (file.getParentUrl().startsWith("&nbsp;&nbsp;共享资源")) {
@@ -122,9 +140,19 @@ public class FileController extends BaseController {
             String fileUrl = dfsClient.uploadFile(multipartFile);
             file.setFileUrl(fileUrl);
 
-            //dfsClient.deleteFile(fileUrl);
+            String msg = "";
+            File oldFile = fileService.checkFileExist(file);
+
+
+            if(null != oldFile){
+                msg = "文件更新成功！";
+                fileService.updateFileStatus(oldFile.getFileId().toString(),false);
+            }else {
+                msg = "文件上传成功！";
+            }
+
             this.fileService.save(file);
-            return BaseResult.buildSuccess("文件上传成功！");
+            return BaseResult.buildSuccess(msg);
         } catch (Exception e) {
             return BaseResult.buildFail("文件上传失败！");
         }
